@@ -1,17 +1,21 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { registerUserSchema } from '../validation/auth.js';
+import { registerUserSchema } from '../validation/user.js';
 import { registerUserController } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { loginUserSchema } from '../validation/auth.js';
+import { loginUserSchema } from '../validation/user.js';
 import { loginUserController } from '../controllers/auth.js';
 import { logoutUserController } from '../controllers/auth.js';
 import { refreshUserSessionController } from '../controllers/auth.js';
 import express from 'express';
-import { requestResetEmailSchema } from '../validation/auth.js';
+import { requestResetEmailSchema } from '../validation/user.js';
 import { requestResetEmailController } from '../controllers/auth.js';
-import { resetPasswordSchema } from '../validation/auth.js';
+import { resetPasswordSchema } from '../validation/user.js';
 import { resetPasswordController } from '../controllers/auth.js';
+import { updateUserSchema } from '../validation/user.js';
+import { upload } from '../middlewares/multer.js';
+import { updateUserController } from '../controllers/user.js';
+
 
 
 const authRouter = Router();
@@ -53,5 +57,12 @@ authRouter.post(
     jsonParser,
     validateBody(resetPasswordSchema),
     ctrlWrapper(resetPasswordController),
+);
+authRouter.patch(
+    '/update-user/:userId',
+    jsonParser,
+    upload.single('photo'),
+    validateBody(updateUserSchema),
+    ctrlWrapper(updateUserController),
 );
 export default authRouter;
