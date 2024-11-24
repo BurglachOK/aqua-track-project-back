@@ -1,4 +1,4 @@
-import { UsersCollection } from '../db/models/user.js';
+import { UserCollection } from '../db/models/user.js';
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 import { randomBytes } from 'crypto';
@@ -13,12 +13,12 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 
 export async function registerUser(payload) {
-    const user = await UsersCollection.findOne({ email: payload.email });
+    const user = await UserCollection.findOne({ email: payload.email });
     if (user) throw createHttpError(409, 'Email in use');
 
     const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
-    return await UsersCollection.create({
+    return await UserCollection.create({
         ...payload,
         password: encryptedPassword,
     });
@@ -38,7 +38,7 @@ function createSession() {
 
 
 export const loginUser = async (payload) => {
-    const user = await UsersCollection.findOne({ email: payload.email });
+    const user = await UserCollection.findOne({ email: payload.email });
     if (!user) {
         throw createHttpError(404, 'User not found');
     }
@@ -101,7 +101,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
 export const resetPassword = async ({ token, password }) => {
     try {
         const decoded = jwt.verify(token, env('JWT_SECRET'));
-        const user = await UsersCollection.findOne({
+        const user = await UserCollection.findOne({
             _id: decoded.sub,
             email: decoded.email,
         });
@@ -110,7 +110,7 @@ export const resetPassword = async ({ token, password }) => {
             throw createHttpError(404, 'User not found!');
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        await UsersCollection.updateOne(
+        await UserCollection.updateOne(
             { _id: user._id },
             { password: hashedPassword }
         );
@@ -126,7 +126,7 @@ export const resetPassword = async ({ token, password }) => {
 
 
 export async function requestResetToken(email) {
-    const user = await UsersCollection.findOne({ email });
+    const user = await UserCollection.findOne({ email });
 
     if (!user) {
         throw createHttpError(404, 'User not found');
