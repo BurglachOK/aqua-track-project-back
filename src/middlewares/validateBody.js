@@ -7,7 +7,7 @@ export const validateBody = (schema) => async (req, res, next) => {
         });
         next();
     } catch (err) {
-        const error = createHttpError(400, 'Contact is not valid', {
+        const error = createHttpError(400, 'User is not valid', {
             message: err.message,
         });
         next(error);
