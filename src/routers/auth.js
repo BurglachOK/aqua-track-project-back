@@ -15,6 +15,7 @@ import { resetPasswordController } from '../controllers/auth.js';
 import { updateUserSchema } from '../validation/user.js';
 import { upload } from '../middlewares/multer.js';
 import { updateUserController } from '../controllers/user.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 
 
@@ -59,8 +60,9 @@ authRouter.post(
     ctrlWrapper(resetPasswordController),
 );
 authRouter.patch(
-    '/update-user/:userId',
+    '/update-user',
     jsonParser,
+    authenticate,
     upload.single('photo'),
     validateBody(updateUserSchema),
     ctrlWrapper(updateUserController),
