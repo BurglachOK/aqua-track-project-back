@@ -10,6 +10,10 @@ const usersSchema = new Schema(
         activeTime: { type: Number, required: true },
         dailyNorm: { type: Number, required: true },
         avatar: { type: String },
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'users',
+        },
     },
     { timestamps: true, versionKey: false },
 );
