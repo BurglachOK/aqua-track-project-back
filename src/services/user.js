@@ -30,3 +30,8 @@ export const updateUser = async (
 
     return user;
 };
+
+export const getTotalUsers = async () => {
+    const totalUsers = await UserCollection.countDocuments();
+    return totalUsers;
+};

@@ -1,6 +1,7 @@
 import { updateUser } from '../services/user.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { getCurrentUser } from '../services/user.js';
+import { getTotalUsers } from '../services/user.js';
 
 
 export const updateUserController = async (req, res) => {
@@ -39,4 +40,18 @@ export const getCurrentUserController = async (req, res) => {
         message: 'Successfully found user!',
         data: user,
     });
+};
+
+export const getTotalUsersController = async (req, res) => {
+    try {
+        const totalUsers = await getTotalUsers();
+        res.json({
+            status: 200,
+            message: 'Successfully retrieved total users count!',
+            totalUsers,
+        });
+    } catch (error) {
+        console.error('Error fetching total users count:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
 };

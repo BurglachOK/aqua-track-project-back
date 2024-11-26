@@ -77,7 +77,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
     });
 
     if (!session) {
-        throw createHttpError(401, 'Session not found');
+        throw createHttpError(401, 'Session not found, Please provide Auth Token');
     }
 
     const isSessionTokenExpired =
@@ -173,31 +173,3 @@ export async function requestResetToken(email) {
         );
     }
 }
-
-
-//export const resetPassword = async (payload) => {
-//let entries;
-
-//try {
-//  entries = jwt.verify(payload.token, env('JWT_SECRET'));
-//} catch (err) {
-//if (err instanceof Error) throw createHttpError(401, err.message);
-//  throw err;
-//}
-
-//const user = await UsersCollection.findOne({
-//email: entries.email,
-//  _id: entries.sub,
-//});
-
-//if (!user) {
-//  throw createHttpError(404, 'User not found');
-//}
-
-//const encryptedPassword = await bcrypt.hash(payload.password, 10);
-
-//await UsersCollection.updateOne(
-//  { _id: user._id },
-//    { password: encryptedPassword },
-//  );
-//};

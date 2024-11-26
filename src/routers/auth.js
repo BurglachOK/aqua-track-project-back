@@ -17,6 +17,7 @@ import { upload } from '../middlewares/multer.js';
 import { updateUserController } from '../controllers/user.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { getCurrentUserController } from '../controllers/user.js';
+import { getTotalUsersController } from '../controllers/user.js';
 
 
 
@@ -40,6 +41,7 @@ authRouter.post(
 
 authRouter.post(
     '/logout',
+    authenticate,
     ctrlWrapper(logoutUserController)
 );
 
@@ -77,5 +79,10 @@ authRouter.patch(
     ctrlWrapper(updateUserController),
 );
 
+authRouter.get(
+    '/total-users',
+    authenticate,
+    ctrlWrapper(getTotalUsersController)
+);
 
 export default authRouter;
