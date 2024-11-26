@@ -2,6 +2,16 @@ import { UserCollection } from '../db/models/user.js';
 // import { HttpError } from 'http-errors';
 
 
+export const getCurrentUser = async ({ userId }) => {
+
+    const user = await UserCollection.findById(userId);
+
+    if (!user) {
+        return null;
+    }
+
+    return user;
+};
 export const updateUser = async (
     userId,
     payload,

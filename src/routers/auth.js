@@ -16,6 +16,8 @@ import { updateUserSchema } from '../validation/user.js';
 import { upload } from '../middlewares/multer.js';
 import { updateUserController } from '../controllers/user.js';
 import { authenticate } from '../middlewares/authenticate.js';
+import { getCurrentUserController } from '../controllers/user.js';
+
 
 
 
@@ -59,6 +61,13 @@ authRouter.post(
     validateBody(resetPasswordSchema),
     ctrlWrapper(resetPasswordController),
 );
+
+authRouter.get(
+    '/current-user',
+    authenticate,
+    ctrlWrapper(getCurrentUserController)
+);
+
 authRouter.patch(
     '/update-user',
     jsonParser,
@@ -67,4 +76,6 @@ authRouter.patch(
     validateBody(updateUserSchema),
     ctrlWrapper(updateUserController),
 );
+
+
 export default authRouter;
