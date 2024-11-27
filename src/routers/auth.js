@@ -53,6 +53,7 @@ authRouter.post(
 authRouter.post(
     '/send-reset-email',
     jsonParser,
+    authenticate,
     validateBody(requestResetEmailSchema),
     ctrlWrapper(requestResetEmailController),
 );
@@ -81,7 +82,6 @@ authRouter.patch(
 
 authRouter.get(
     '/total-users',
-    authenticate,
     ctrlWrapper(getTotalUsersController)
 );
 
