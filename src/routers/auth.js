@@ -15,6 +15,9 @@ import { resetPasswordController } from '../controllers/auth.js';
 import { updateUserSchema } from '../validation/user.js';
 import { upload } from '../middlewares/multer.js';
 import { updateUserController } from '../controllers/user.js';
+import { authenticate } from '../middlewares/authenticate.js';
+import { getCurrentUserController } from '../controllers/user.js';
+import { getTotalUsersController } from '../controllers/user.js';
 import {
   getOAuthURLController,
   confirmOAuthController,
@@ -38,7 +41,7 @@ authRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post('/logout', ctrlWrapper(logoutUserController));
+authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 
 authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
@@ -55,12 +58,26 @@ authRouter.post(
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
+
+authRouter.get(
+  '/current-user',
+  authenticate,
+  ctrlWrapper(getCurrentUserController),
+);
+
 authRouter.patch(
-  '/update-user/:userId',
+  '/update-user',
   jsonParser,
+  authenticate,
   upload.single('photo'),
   validateBody(updateUserSchema),
   ctrlWrapper(updateUserController),
+);
+
+authRouter.get(
+  '/total-users',
+  authenticate,
+  ctrlWrapper(getTotalUsersController),
 );
 
 authRouter.get('/get-oauth-url', ctrlWrapper(getOAuthURLController));

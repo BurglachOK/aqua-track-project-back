@@ -74,7 +74,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 
   if (!session) {
-    throw createHttpError(401, 'Session not found');
+    throw createHttpError(401, 'Session not found, please provide Auth Token');
   }
 
   const isSessionTokenExpired =
@@ -167,33 +167,6 @@ export async function requestResetToken(email) {
   }
 }
 
-//export const resetPassword = async (payload) => {
-//let entries;
-
-//try {
-//  entries = jwt.verify(payload.token, env('JWT_SECRET'));
-//} catch (err) {
-//if (err instanceof Error) throw createHttpError(401, err.message);
-//  throw err;
-//}
-
-//const user = await UsersCollection.findOne({
-//email: entries.email,
-//  _id: entries.sub,
-//});
-
-//if (!user) {
-//  throw createHttpError(404, 'User not found');
-//}
-
-//const encryptedPassword = await bcrypt.hash(payload.password, 10);
-
-//await UsersCollection.updateOne(
-//  { _id: user._id },
-//    { password: encryptedPassword },
-//  );
-//};
-
 export async function loginOrRegisterUser(payload) {
   const user = await UserCollection.findOne({ email: payload.email });
 
@@ -216,12 +189,12 @@ export async function loginOrRegisterUser(payload) {
       refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
     });
   }
-  //   await SessionsCollection.deleteOne({ userId: user._id });
-  //   return SessionsCollection.create({
-  //     userId: user._id,
-  //     accessToken: crypto.randomBytes(30).toString('base64'),
-  //     refreshToken: crypto.randomBytes(30).toString('base64'),
-  //     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-  //     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
-  //   });
+  await SessionsCollection.deleteOne({ userId: user._id });
+  return SessionsCollection.create({
+    userId: user._id,
+    accessToken: crypto.randomBytes(30).toString('base64'),
+    refreshToken: crypto.randomBytes(30).toString('base64'),
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
+  });
 }
