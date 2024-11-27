@@ -1,16 +1,30 @@
-
 import { model, Schema } from 'mongoose';
+import { localDate, localTime } from '../../services/water';
 
 const waterSchema = new Schema(
-    {
-        amount: { type: Number, required: true },
-        userId: { type: Schema.Types.ObjectId, ref: 'users' },
-        date: { type: Date, required: true },
+  {
+    volume: {
+      type: Number,
+      required: true,
     },
-    {
-        timestamps: true,
-        versionKey: false,
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+      required: true,
     },
+    date: {
+      type: String,
+      default: () => localDate(),
+    },
+    time: {
+      type: String,
+      default: () => localTime(),
+    },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
 );
 
-export const WaterCollection = model('water', waterSchema);
+export const WaterVolume = model('water', waterSchema);
