@@ -18,71 +18,86 @@ import { updateUserController } from '../controllers/user.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { getCurrentUserController } from '../controllers/user.js';
 import { getTotalUsersController } from '../controllers/user.js';
-
-
-
+import {
+  getOAuthURLController,
+  confirmOAuthController,
+} from '../controllers/auth.js';
+import { confirmOAuthSchema } from '../validation/user.js';
 
 const authRouter = Router();
 const jsonParser = express.json();
 
 authRouter.post(
-    '/register',
-    jsonParser,
-    validateBody(registerUserSchema),
-    ctrlWrapper(registerUserController),
+  '/register',
+  jsonParser,
+  validateBody(registerUserSchema),
+  ctrlWrapper(registerUserController),
 );
 
 authRouter.post(
-    '/login',
-    jsonParser,
-    validateBody(loginUserSchema),
-    ctrlWrapper(loginUserController),
+  '/login',
+  jsonParser,
+  validateBody(loginUserSchema),
+  ctrlWrapper(loginUserController),
 );
 
 authRouter.post(
-    '/logout',
-    authenticate,
-    ctrlWrapper(logoutUserController)
+  '/refresh',
+  ctrlWrapper(refreshUserSessionController)
 );
 
 authRouter.post(
-    '/refresh',
-    ctrlWrapper(refreshUserSessionController)
+  '/logout',
+  authenticate,
+  ctrlWrapper(logoutUserController)
+);
+
+
+authRouter.post(
+  '/send-reset-email',
+  jsonParser,
+  authenticate,
+  validateBody(requestResetEmailSchema),
+  ctrlWrapper(requestResetEmailController),
 );
 
 authRouter.post(
-    '/send-reset-email',
-    jsonParser,
-    authenticate,
-    validateBody(requestResetEmailSchema),
-    ctrlWrapper(requestResetEmailController),
-);
-
-authRouter.post(
-    '/reset-pwd',
-    jsonParser,
-    validateBody(resetPasswordSchema),
-    ctrlWrapper(resetPasswordController),
+  '/reset-pwd',
+  jsonParser,
+  validateBody(resetPasswordSchema),
+  ctrlWrapper(resetPasswordController),
 );
 
 authRouter.get(
-    '/current-user',
-    authenticate,
-    ctrlWrapper(getCurrentUserController)
+  '/current-user',
+  authenticate,
+  ctrlWrapper(getCurrentUserController),
 );
 
 authRouter.patch(
-    '/update-user',
-    jsonParser,
-    authenticate,
-    upload.single('photo'),
-    validateBody(updateUserSchema),
-    ctrlWrapper(updateUserController),
+  '/update-user',
+  jsonParser,
+  authenticate,
+  upload.single('photo'),
+  validateBody(updateUserSchema),
+  ctrlWrapper(updateUserController),
 );
 
 authRouter.get(
-    '/total-users',
-    ctrlWrapper(getTotalUsersController)
+  '/total-users',
+  ctrlWrapper(getTotalUsersController),
+);
+
+authRouter.get(
+  '/get-oauth-url',
+  ctrlWrapper(getOAuthURLController)
+);
+
+authRouter.post(
+  '/confirm-oauth',
+  jsonParser,
+  validateBody(confirmOAuthSchema),
+  ctrlWrapper(confirmOAuthController),
 );
 
 export default authRouter;
