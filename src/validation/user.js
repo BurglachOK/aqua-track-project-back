@@ -11,7 +11,7 @@ export const registerUserSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
   gender: Joi.string().valid('male', 'female', 'other').required(),
-  weight: Joi.number().min(1).max(500).required(),
+  weight: Joi.number().required(),
   activeTime: Joi.number().required(),
   dailyNorm: Joi.number().required(),
 });
@@ -21,7 +21,7 @@ export const updateUserSchema = Joi.object({
   password: Joi.string(),
   email: Joi.string().email(),
   gender: Joi.string().valid('male', 'female', 'other'),
-  weight: Joi.number().min(1).max(500),
+  weight: Joi.number(),
   activeTime: Joi.number(),
   dailyNorm: Joi.number(),
 }).min(1);

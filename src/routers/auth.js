@@ -41,13 +41,22 @@ authRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
+authRouter.post(
+  '/refresh',
+  ctrlWrapper(refreshUserSessionController)
+);
 
-authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
+authRouter.post(
+  '/logout',
+  authenticate,
+  ctrlWrapper(logoutUserController)
+);
+
 
 authRouter.post(
   '/send-reset-email',
   jsonParser,
+  authenticate,
   validateBody(requestResetEmailSchema),
   ctrlWrapper(requestResetEmailController),
 );
@@ -76,11 +85,13 @@ authRouter.patch(
 
 authRouter.get(
   '/total-users',
-  authenticate,
   ctrlWrapper(getTotalUsersController),
 );
 
-authRouter.get('/get-oauth-url', ctrlWrapper(getOAuthURLController));
+authRouter.get(
+  '/get-oauth-url',
+  ctrlWrapper(getOAuthURLController)
+);
 
 authRouter.post(
   '/confirm-oauth',
