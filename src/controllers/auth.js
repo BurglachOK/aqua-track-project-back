@@ -6,6 +6,7 @@ import { refreshUsersSession, loginOrRegisterUser } from '../services/auth.js';
 import { requestResetToken } from '../services/auth.js';
 import { resetPassword } from '../services/auth.js';
 import { generateOuthURL, validateCode } from '../utils/googleOAuth2.js';
+import { sendVerificationEmail, verifyEmail } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -133,3 +134,21 @@ export async function confirmOAuthController(req, res) {
     },
   });
 }
+
+export const sendVerificationEmailController = async (req, res) => {
+  const user = req.user;
+  const token = await sendVerificationEmail(user);
+
+  res.status(200).json({
+    status: 200,
+    message: 'Verification email sent successfully',
+    data: { token },
+  });
+};
+
+export const verifyEmailController = async (req, res) => {
+  const { token } = req.query;
+  const user = await verifyEmail(token);
+
+  res.redirect(`${env('APP_DOMAIN')}/email-verified`);
+};

@@ -23,6 +23,10 @@ import {
   confirmOAuthController,
 } from '../controllers/auth.js';
 import { confirmOAuthSchema } from '../validation/user.js';
+import {
+  sendVerificationEmailController,
+  verifyEmailController,
+} from '../controllers/auth.js';
 
 const authRouter = Router();
 const jsonParser = express.json();
@@ -41,17 +45,9 @@ authRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post(
-  '/refresh',
-  ctrlWrapper(refreshUserSessionController)
-);
+authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
-authRouter.post(
-  '/logout',
-  authenticate,
-  ctrlWrapper(logoutUserController)
-);
-
+authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 
 authRouter.post(
   '/send-reset-email',
@@ -83,15 +79,9 @@ authRouter.patch(
   ctrlWrapper(updateUserController),
 );
 
-authRouter.get(
-  '/total-users',
-  ctrlWrapper(getTotalUsersController),
-);
+authRouter.get('/total-users', ctrlWrapper(getTotalUsersController));
 
-authRouter.get(
-  '/get-oauth-url',
-  ctrlWrapper(getOAuthURLController)
-);
+authRouter.get('/get-oauth-url', ctrlWrapper(getOAuthURLController));
 
 authRouter.post(
   '/confirm-oauth',
@@ -99,5 +89,13 @@ authRouter.post(
   validateBody(confirmOAuthSchema),
   ctrlWrapper(confirmOAuthController),
 );
+
+authRouter.get(
+  '/send-verification-email',
+  authenticate,
+  ctrlWrapper(sendVerificationEmailController),
+);
+
+authRouter.get('/verify-email', ctrlWrapper(verifyEmailController));
 
 export default authRouter;

@@ -198,3 +198,57 @@ export async function loginOrRegisterUser(payload) {
     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
   });
 }
+
+export async function sendVerificationEmail(user) {
+  const verificationToken = jwt.sign(
+    { sub: user._id, email: user.email },
+    env('JWT_SECRET'),
+    { expiresIn: '1h' },
+  );
+
+  const verificationEmailTemplatePath = path.join(
+    TEMPLATES_DIR,
+    'verify-email.html',
+  );
+
+  const templateSource = (
+    await fs.readFile(verificationEmailTemplatePath)
+  ).toString();
+  const template = handlebars.compile(templateSource);
+
+  const html = template({
+    name: user.name,
+    link: `${env('APP_DOMAIN')}/verify-email?token=${verificationToken}`,
+  });
+
+  await sendEmail({
+    from: env('SMTP_FROM'),
+    to: user.email,
+    subject: 'Verify your email',
+    html,
+  });
+
+  return verificationToken;
+}
+
+export async function verifyEmail(token) {
+  try {
+    const decoded = jwt.verify(token, env('JWT_SECRET'));
+    const user = await UserCollection.findById(decoded.sub);
+
+    if (!user) throw createHttpError(404, 'User not found');
+    if (user.isVerified) throw createHttpError(400, 'Email already verified');
+
+    user.isVerified = true;
+    await user.save();
+    return user;
+  } catch (error) {
+    if (
+      error.name === 'JsonWebTokenError' ||
+      error.name === 'TokenExpiredError'
+    ) {
+      throw createHttpError(401, 'Token is expired or invalid');
+    }
+    throw error;
+  }
+}

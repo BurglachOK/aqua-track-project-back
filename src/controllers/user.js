@@ -3,55 +3,53 @@ import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { getCurrentUser } from '../services/user.js';
 import { getTotalUsers } from '../services/user.js';
 
-
 export const updateUserController = async (req, res) => {
-    if (!req.user || !req.user._id) {
-        return res.status(401).json({ message: 'Unauthorized: user not found' });
-    }
+  if (!req.user || !req.user._id) {
+    return res.status(401).json({ message: 'Unauthorized: user not found' });
+  }
 
-    const { ...userData } = req.body;
-    const avatar = req.file ? await saveFileToCloudinary(req.file) : null;
+  const { ...userData } = req.body;
+  const avatar = req.file ? await saveFileToCloudinary(req.file) : null;
 
-    const updatedUser = await updateUser(req.user._id, { ...userData, avatar });
+  const updatedUser = await updateUser(req.user._id, { ...userData, avatar });
 
-    res.json({
-        status: 200,
-        message: 'User was updated',
-        data: updatedUser,
-    });
+  res.json({
+    status: 200,
+    message: 'User was updated',
+    data: updatedUser,
+  });
 };
 
 export const getCurrentUserController = async (req, res) => {
+  if (!req.user || !req.user._id) {
+    return res.status(401).json({ message: 'Unauthorized: user not found' });
+  }
 
-    if (!req.user || !req.user._id) {
-        return res.status(401).json({ message: 'Unauthorized: user not found' });
-    }
+  const userId = req.user._id;
 
-    const userId = req.user._id;
+  const user = await getCurrentUser({ userId });
 
-    const user = await getCurrentUser({ userId });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
 
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json({
-        status: 200,
-        message: 'Successfully found user!',
-        data: user,
-    });
+  res.json({
+    status: 200,
+    message: 'Successfully found user!',
+    data: user,
+  });
 };
 
 export const getTotalUsersController = async (req, res) => {
-    try {
-        const totalUsers = await getTotalUsers();
-        res.json({
-            status: 200,
-            message: 'Successfully retrieved total users count!',
-            totalUsers,
-        });
-    } catch (error) {
-        console.error('Error fetching total users count:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
+  try {
+    const totalUsers = await getTotalUsers();
+    res.json({
+      status: 200,
+      message: 'Successfully retrieved total users count!',
+      totalUsers,
+    });
+  } catch (error) {
+    console.error('Error fetching total users count:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 };
