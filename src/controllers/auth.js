@@ -7,6 +7,7 @@ import { requestResetToken } from '../services/auth.js';
 import { resetPassword } from '../services/auth.js';
 import { generateOuthURL, validateCode } from '../utils/googleOAuth2.js';
 import { sendVerificationEmail, verifyEmail } from '../services/auth.js';
+import { env } from '../utils/env.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
