@@ -29,7 +29,7 @@ properties:
     description: 'User daily activity time in hours'
     type: number
     example: 2
-  dailyWaterNorm:
+  dailyNorm:
     description: 'User daily water intake norm in liters'
     type: number
     example: 1.5
