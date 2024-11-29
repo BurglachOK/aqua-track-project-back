@@ -14,6 +14,8 @@ const usersSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'users',
     },
+
+    verifyEmail: { type: Boolean, default: false },
   },
   { timestamps: true, versionKey: false },
 );

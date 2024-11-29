@@ -103,7 +103,7 @@ export async function getOAuthURLController(req, res) {
 
   res.send({
     status: 200,
-    message: 'Succesfully get Google OAuth URL',
+    message: 'Successfully get Google OAuth URL',
     data: url,
   });
 }
@@ -129,7 +129,7 @@ export async function confirmOAuthController(req, res) {
 
   res.json({
     status: 200,
-    message: 'Login with Google succesfully',
+    message: 'Login with Google successfully',
     data: {
       accessToken: session.accessToken,
     },
