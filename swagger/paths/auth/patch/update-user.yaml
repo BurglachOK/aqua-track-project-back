@@ -24,8 +24,8 @@ requestBody:
           gender:
             description: 'User gender'
             type: string
-            enum: ['woman', 'man']
-            example: 'man'
+            enum: ['female', 'male', 'other']
+            example: 'male'
           weight:
             description: 'User weight in kilograms'
             type: number
