@@ -52,7 +52,6 @@ authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 authRouter.post(
   '/send-reset-email',
   jsonParser,
-  authenticate,
   validateBody(requestResetEmailSchema),
   ctrlWrapper(requestResetEmailController),
 );
