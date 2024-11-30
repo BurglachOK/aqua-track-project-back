@@ -1,7 +1,7 @@
 tags:
   - Water
 summary: Patch water card by id
-operationId: patchCard
+operationId: updateWaterVolume
 description: 'Update info on existing water card with given id'
 security:
   - bearerAuth: []
@@ -27,11 +27,16 @@ requestBody:
                 example: 200
           - required:
               - date
+              - time
             properties:
               date:
                 description: 'Time of consumption'
                 type: string
-                example: '02-08-2024'
+                example: '29-11-2024'
+              time:
+                description: 'Time of consumption'
+                type: string
+                example: '21:00'
 responses:
   '200':
     description: Successfully patched a card!
@@ -43,6 +48,7 @@ responses:
             - status
             - message
             - data
+            - water
           properties:
             status:
               type: integer

@@ -29,6 +29,10 @@ properties:
     description: 'User daily activity time in hours'
     type: number
     example: 2
+  # verifyEmail:
+  #   description: 'User daily activity time in hours'
+  #   type: boolean
+  #   example: true
   dailyNorm:
     description: 'User daily water intake norm in liters'
     type: number
@@ -36,4 +40,4 @@ properties:
   avatar:
     description: 'URL to the user avatar image'
     type: string
-    example:
+    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png

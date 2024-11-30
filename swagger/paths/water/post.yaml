@@ -48,7 +48,7 @@ responses:
             data:
               type: object
               $ref: '../../components/schemas/water.yaml'
-            # actualDayWater:
+            # water:
             #   type: integer
             #   example: 1350
             # якщо потрібно, та якщо допишуть

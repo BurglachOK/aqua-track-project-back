@@ -15,18 +15,44 @@ servers:
   - url: http://localhost:3000
   - url: aqua-track-project-back.onrender.com
 paths:
-  /contacts:
-    get:
-      $ref: ../swagger/paths/contacts/get.yaml
+  /water:
     post:
-      $ref: ../swagger/paths/contacts/post.yaml
-  /contacts/{id}:
-    get:
-      $ref: ../swagger/paths/contacts/{id}/get.yaml
+      $ref: ../swagger/paths/water/post.yaml
+  /water/{id}:
     patch:
-      $ref: ../swagger/paths/contacts/{id}/patch.yaml
+      $ref: ../swagger/paths/water/{id}/patch.yaml
     delete:
-      $ref: ../swagger/paths/contacts/{id}/delete.yaml
+      $ref: ../swagger/paths/water/{id}/delete.yaml
+  /users/total-users:
+    get:
+      $ref: ../swagger/paths/users/get/total-users.yaml
+  /users/get-oauth-url:
+    get:
+      $ref: ../swagger/paths/users/get/get-oauth-url.yaml
+  /users/current-user:
+    get:
+      $ref: ../swagger/paths/users/get/current-user.yaml
+  /users/update-user:
+    patch:
+      $ref: ../swagger/paths/users/patch/update-user.yaml
+  /users/register:
+    post:
+      $ref: ../swagger/paths/users/post/register.yaml
+  /users/login:
+    post:
+      $ref: ../swagger/paths/users/post/login.yaml
+  /users/logout:
+    post:
+      $ref: ../swagger/paths/users/post/logout.yaml
+  /users/refresh:
+    post:
+      $ref: ../swagger/paths/users/post/refresh.yaml
+  /users/send-reset-email:
+    post:
+      $ref: ../swagger/paths/users/post/send-reset-email.yaml
+  /users/reset-pwd:
+    post:
+      $ref: ../swagger/paths/users/post/reset-pwd.yaml
 components:
   securitySchemes:
     bearerAuth:

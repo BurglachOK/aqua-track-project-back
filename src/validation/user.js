@@ -14,8 +14,8 @@ export const registerUserSchema = Joi.object({
 });
 
 export const updateUserSchema = Joi.object({
-
-  name: Joi.string().pattern(/^[a-zA-Z ]+$/)
+  name: Joi.string()
+    .pattern(/^[a-zA-Z ]+$/)
     .messages({
       'string.pattern.base': 'Name can only contain letters',
     }),
@@ -30,11 +30,12 @@ export const updateUserSchema = Joi.object({
   activeTime: Joi.number().min(0).messages({
     'number.min': 'Daily activity time cannot be a negative number',
   }),
-  verifyEmail: Joi.boolean(),
+  // verifyEmail: Joi.boolean(),
 
   dailyNorm: Joi.number().min(0).messages({
     'number.min': 'Daily water norm cannot be a negative number',
-  }), avatar: Joi.binary(),
+  }),
+  avatar: Joi.binary(),
 }).min(1);
 
 export const loginUserSchema = Joi.object({

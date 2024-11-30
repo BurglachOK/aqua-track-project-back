@@ -17,7 +17,7 @@ properties:
   date:
     description: 'Date of consumption'
     type: string
-    example: '2024-11-29'
+    example: '29-11-2024'
   time:
     description: 'Time of consumption'
     type: string

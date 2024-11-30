@@ -1,0 +1,57 @@
+tags:
+  - User
+summary: Authenticate a user
+operationId: loginUser
+description: 'Authenticate a user and return a access token.'
+security: []
+requestBody:
+  description: 'User login details.'
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: 'User email'
+            type: string
+            example: john.doe@email.com
+          password:
+            description: 'User password'
+            type: string
+            example: 'P@ssw0rd123'
+responses:
+  '200':
+    description: 'User authenticated successfully'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully logged in an user!'
+            data:
+              type: object
+              required:
+                - user
+                - token
+              properties:
+                user:
+                  $ref: '../../../components/schemas/user.yaml'
+                accessToken:
+                  type: string
+                  description: 'Access token for authenticated user'
+                  example: 'YBDTZRgpgFARbz3TetV4ZNylDdgPGYj4dSM8Rbuy'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
