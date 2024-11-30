@@ -1,7 +1,6 @@
 type: object
 required:
   - _id
-  - name
   - email
 properties:
   _id:
