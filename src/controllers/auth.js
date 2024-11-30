@@ -10,7 +10,7 @@ import { sendVerificationEmail, verifyEmail } from '../services/auth.js';
 import { env } from '../utils/env.js';
 
 export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
+  const newUser = await registerUser(req.body);
   {
     const session = await loginUser(req.body);
 
@@ -26,7 +26,7 @@ export const registerUserController = async (req, res) => {
     res.status(201).json({
       status: 201,
       message: 'Successfully registered a user! There is your AuthToken',
-      data: { user, accessToken: session.accessToken, }
+      data: { newUser, accessToken: session.accessToken, }
     },
     );
   };
