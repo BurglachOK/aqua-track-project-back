@@ -23,36 +23,36 @@ paths:
       $ref: ../swagger/paths/water/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/water/{id}/delete.yaml
-  /users/total-users:
+  /auth/total-users:
     get:
-      $ref: ../swagger/paths/users/get/total-users.yaml
-  /users/get-oauth-url:
+      $ref: ../swagger/paths/auth/get/total-users.yaml
+  /auth/get-oauth-url:
     get:
-      $ref: ../swagger/paths/users/get/get-oauth-url.yaml
-  /users/current-user:
+      $ref: ../swagger/paths/auth/get/get-oauth-url.yaml
+  /auth/current-user:
     get:
-      $ref: ../swagger/paths/users/get/current-user.yaml
-  /users/update-user:
+      $ref: ../swagger/paths/auth/get/current-user.yaml
+  /auth/update-user:
     patch:
-      $ref: ../swagger/paths/users/patch/update-user.yaml
-  /users/register:
+      $ref: ../swagger/paths/auth/patch/update-user.yaml
+  /auth/register:
     post:
-      $ref: ../swagger/paths/users/post/register.yaml
-  /users/login:
+      $ref: ../swagger/paths/auth/post/register.yaml
+  /auth/login:
     post:
-      $ref: ../swagger/paths/users/post/login.yaml
-  /users/logout:
+      $ref: ../swagger/paths/auth/post/login.yaml
+  /auth/logout:
     post:
-      $ref: ../swagger/paths/users/post/logout.yaml
-  /users/refresh:
+      $ref: ../swagger/paths/auth/post/logout.yaml
+  /auth/refresh:
     post:
-      $ref: ../swagger/paths/users/post/refresh.yaml
-  /users/send-reset-email:
+      $ref: ../swagger/paths/auth/post/refresh.yaml
+  /auth/send-reset-email:
     post:
-      $ref: ../swagger/paths/users/post/send-reset-email.yaml
-  /users/reset-pwd:
+      $ref: ../swagger/paths/auth/post/send-reset-email.yaml
+  /auth/reset-pwd:
     post:
-      $ref: ../swagger/paths/users/post/reset-pwd.yaml
+      $ref: ../swagger/paths/auth/post/reset-pwd.yaml
 components:
   securitySchemes:
     bearerAuth:

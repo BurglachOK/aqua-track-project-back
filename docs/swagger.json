@@ -277,7 +277,7 @@
         }
       }
     },
-    "/users/total-users": {
+    "/auth/total-users": {
       "get": {
         "tags": [
           "User"
@@ -331,7 +331,7 @@
         }
       }
     },
-    "/users/get-oauth-url": {
+    "/auth/get-oauth-url": {
       "get": {
         "tags": [
           "User"
@@ -384,7 +384,7 @@
         }
       }
     },
-    "/users/current-user": {
+    "/auth/current-user": {
       "get": {
         "tags": [
           "User"
@@ -436,7 +436,7 @@
         }
       }
     },
-    "/users/update-user": {
+    "/auth/update-user": {
       "patch": {
         "tags": [
           "User"
@@ -541,7 +541,7 @@
         }
       }
     },
-    "/users/register": {
+    "/auth/register": {
       "post": {
         "tags": [
           "User"
@@ -626,7 +626,7 @@
         }
       }
     },
-    "/users/login": {
+    "/auth/login": {
       "post": {
         "tags": [
           "User"
@@ -711,7 +711,7 @@
         }
       }
     },
-    "/users/logout": {
+    "/auth/logout": {
       "post": {
         "tags": [
           "User"
@@ -748,7 +748,7 @@
         }
       }
     },
-    "/users/refresh": {
+    "/auth/refresh": {
       "post": {
         "tags": [
           "User"
@@ -826,7 +826,7 @@
         }
       }
     },
-    "/users/send-reset-email": {
+    "/auth/send-reset-email": {
       "post": {
         "tags": [
           "User"
@@ -944,7 +944,7 @@
         }
       }
     },
-    "/users/reset-pwd": {
+    "/auth/reset-pwd": {
       "post": {
         "tags": [
           "User"
