@@ -471,10 +471,11 @@
                     "description": "User gender",
                     "type": "string",
                     "enum": [
-                      "woman",
-                      "man"
+                      "female",
+                      "male",
+                      "other"
                     ],
-                    "example": "man"
+                    "example": "male"
                   },
                   "weight": {
                     "description": "User weight in kilograms",
