@@ -74,7 +74,7 @@ authRouter.patch(
   '/update-user',
   jsonParser,
   authenticate,
-  upload.single('photo'),
+  upload.single('avatar'),
   validateBody(updateUserSchema),
   ctrlWrapper(updateUserController),
 );
