@@ -96,6 +96,10 @@
                     "data": {
                       "type": "object",
                       "$ref": "#/components/schemas/water"
+                    },
+                    "water": {
+                      "type": "integer",
+                      "example": 1350
                     }
                   }
                 }
@@ -395,6 +399,17 @@
         "security": [
           {
             "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
           }
         ],
         "responses": {
@@ -725,17 +740,6 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "in": "cookie",
-            "name": "sessionId",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Session ID cookie"
-          }
-        ],
         "responses": {
           "204": {
             "description": "User logged out successfully"
@@ -760,26 +764,6 @@
         "security": [
           {
             "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "cookie",
-            "name": "sessionId",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Session ID cookie"
-          },
-          {
-            "in": "cookie",
-            "name": "refreshToken",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Refresh token cookie"
           }
         ],
         "responses": {
