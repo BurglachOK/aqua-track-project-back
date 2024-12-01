@@ -5,19 +5,19 @@ operationId: refreshUsersSession
 description: 'Refresh the current user session by providing a session ID and refresh token.'
 security:
   - bearerAuth: []
-parameters:
-  - in: cookie
-    name: sessionId
-    schema:
-      type: string
-    required: true
-    description: 'Session ID cookie'
-  - in: cookie
-    name: refreshToken
-    schema:
-      type: string
-    required: true
-    description: 'Refresh token cookie'
+# parameters:
+#   - in: cookie
+#     name: sessionId
+#     schema:
+#       type: string
+#     required: true
+#     description: 'Session ID cookie'
+#   - in: cookie
+#     name: refreshToken
+#     schema:
+#       type: string
+#     required: true
+#     description: 'Refresh token cookie'
 responses:
   '200':
     description: 'Session refreshed successfully'

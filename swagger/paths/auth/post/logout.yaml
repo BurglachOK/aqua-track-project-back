@@ -5,13 +5,13 @@ operationId: logoutUser
 description: 'Logout the current user by invalidating the access token.'
 security:
   - bearerAuth: []
-parameters:
-  - in: cookie
-    name: sessionId
-    schema:
-      type: string
-    required: true
-    description: 'Session ID cookie'
+# parameters:
+#   - in: cookie
+#     name: sessionId
+#     schema:
+#       type: string
+#     required: true
+#     description: 'Session ID cookie'
 responses:
   '204':
     description: 'User logged out successfully'
