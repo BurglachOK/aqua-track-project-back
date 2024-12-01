@@ -2,12 +2,6 @@ import Joi from 'joi';
 import { emailRegexp } from '../constants/index.js';
 
 export const registerUserSchema = Joi.object({
-  name: Joi.string().min(3).max(30).messages({
-    'string.base':
-      'Username should be a written only with letters, not numbers or other stuff',
-    'string.min': 'Username should have at least {#limit} characters',
-    'string.max': 'Username should have at most {#limit} characters',
-  }),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
 });
