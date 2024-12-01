@@ -10,13 +10,25 @@ import { sendVerificationEmail, verifyEmail } from '../services/auth.js';
 import { env } from '../utils/env.js';
 
 export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
+  const newUser = await registerUser(req.body);
+
+  const session = await loginUser(req.body);
+
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
 
   res.status(201).json({
     status: 201,
-    message: 'Successfully registered a user!',
-    data: user,
-  });
+    message: 'Successfully registered a user! There is your AuthToken',
+    data: { newUser, accessToken: session.accessToken, }
+  },
+  );
 };
 
 export const loginUserController = async (req, res) => {
