@@ -6,11 +6,11 @@ const timeRegex = /^(?:2[0-4]|[01]?\d):(?:[0-5]\d)$/;
 export const createWaterVolumeSchema = Joi.object({
   volume: Joi.number().positive().integer(),
   date: Joi.string()
-    // .required()
+    .required()
     .pattern(dateRegex)
     .message('Date must be dd.mm.yyyy / Where dd: 01-31, mm: 01-12'),
   time: Joi.string()
-    // .required()
+    .required()
     .pattern(timeRegex)
     .message('Time must be hh:mm / Where hh: 00-24, mm: 00-59'),
 }).options({ abortEarly: false });
