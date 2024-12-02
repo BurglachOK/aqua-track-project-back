@@ -18,7 +18,8 @@ export const setupServer = () => {
   const app = express();
 
   app.use(cors({
-    origin: 'https://aqua-track-project-back.onrender.com', // або '*', якщо дозволені всі домени
+    origin: '*', // або '*', якщо дозволені всі домени
+    // origin: ['https://aqua-track-project-back.onrender.com', 'http://localhost:3000/', 'http://localhost:5173/'], // або '*', якщо дозволені всі домени
     credentials: true
   }));
 
@@ -35,8 +36,6 @@ export const setupServer = () => {
   app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
 
-  //   app.use(errorHandler);
-  app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('*', notFoundHandler);
   app.use(errorHandler);
 

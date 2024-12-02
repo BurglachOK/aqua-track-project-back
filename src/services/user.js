@@ -31,7 +31,23 @@ export const updateUser = async (
     return user;
 };
 
+
+//Закоментити коли треба буде отримувати на тотал юзери фото і ім'я
 export const getTotalUsers = async () => {
     const totalUsers = await UserCollection.countDocuments();
     return totalUsers;
 };
+
+
+//Розкоментити коли треба буде отримувати на тотал юзери фото і ім'я
+// export const getTotalUsers = async () => {
+//     try {
+//         const users = await UserCollection.find({}, '-_id name avatar');
+//         return users;
+//     } catch {
+//         throw new Error('Server error');
+//     }
+// };
+
+
+//Ще у контроллерах коменти з приводу тотал узерів
