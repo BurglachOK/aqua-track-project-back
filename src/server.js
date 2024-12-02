@@ -17,7 +17,11 @@ const PORT = Number(env('PORT', '3000'));
 export const setupServer = () => {
   const app = express();
 
-  app.use(cors());
+  app.use(cors({
+    origin: 'https://aqua-track-project-back.onrender.com', // або '*', якщо дозволені всі домени
+    credentials: true
+  }));
+
   app.use(cookieParser());
 
   app.get('/', (req, res) => {
