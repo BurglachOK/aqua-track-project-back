@@ -39,7 +39,7 @@ export const getCurrentUserController = async (req, res) => {
     data: user,
   });
 };
-
+//Закоментити коли треба буде отримувати на тотал юзери фото і ім'я
 export const getTotalUsersController = async (req, res) => {
   try {
     const totalUsers = await getTotalUsers();
@@ -53,3 +53,19 @@ export const getTotalUsersController = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+//Розкоментити коли треба буде отримувати на тотал юзери фото і ім'я
+// export const getTotalUsersController = async (req, res) => {
+//   try {
+//     const totalUsers = await getTotalUsers();
+//     res.status(200).json(totalUsers);
+//   } catch {
+//     res.status(500).json({
+//       message: 'Server error'
+//     });
+//   }
+// };
+
+
+//Ще у сервісах коменти з приводу тотал узерів
