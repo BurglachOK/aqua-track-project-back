@@ -8,6 +8,43 @@ import { resetPassword } from '../services/auth.js';
 import { generateOuthURL, validateCode } from '../utils/googleOAuth2.js';
 import { sendVerificationEmail, verifyEmail } from '../services/auth.js';
 import { env } from '../utils/env.js';
+import jwt from 'jsonwebtoken';
+import { Token } from '../db/models/RefreshToken.js';
+
+
+const generateTokens = (user) => {
+  const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
+  const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+  return { accessToken, refreshToken };
+};
+
+export const refreshSessionController = async (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) return res.status(400).json({ message: 'Refresh token is required' });
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const existingToken = await Token.findOne({ token: refreshToken, userId: decoded.id });
+
+    if (!existingToken || new Date(existingToken.expiresAt) < new Date()) {
+      return res.status(403).json({ message: 'Invalid or expired refresh token' });
+    }
+
+    const user = { _id: decoded.id };
+    const tokens = generateTokens(user);
+
+
+    existingToken.token = tokens.refreshToken;
+    existingToken.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    await existingToken.save();
+
+    res.json(tokens);
+  } catch (err) {
+    res.status(403).json({ message: 'Failed to refresh session' });
+  }
+};
+
 
 export const registerUserController = async (req, res) => {
   const newUser = await registerUser(req.body);
@@ -31,26 +68,25 @@ export const registerUserController = async (req, res) => {
   );
 };
 
+
 export const loginUserController = async (req, res) => {
-  const session = await loginUser(req.body);
+  const { email, password } = req.body;
 
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + THIRTY_DAYS),
-  });
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: new Date(Date.now() + THIRTY_DAYS),
-  });
 
-  res.json({
-    status: 200,
-    message: 'Successfully logged in an user!',
-    data: {
-      accessToken: session.accessToken,
-    },
-  });
+  const user = await User.findOne({ email });
+  if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+
+  const tokens = generateTokens(user);
+
+  await new Token({
+    token: tokens.refreshToken,
+    userId: user._id,
+    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  }).save();
+
+  res.json(tokens);
 };
+
 
 export const logoutUserController = async (req, res) => {
   console.log(req.cookies.sessionId);

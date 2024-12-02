@@ -6,7 +6,7 @@ import { validateBody } from '../middlewares/validateBody.js';
 import { loginUserSchema } from '../validation/user.js';
 import { loginUserController } from '../controllers/auth.js';
 import { logoutUserController } from '../controllers/auth.js';
-import { refreshUserSessionController } from '../controllers/auth.js';
+import { refreshSessionController } from '../controllers/auth.js';
 import express from 'express';
 import { requestResetEmailSchema } from '../validation/user.js';
 import { requestResetEmailController } from '../controllers/auth.js';
@@ -45,7 +45,8 @@ authRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post('/refresh', authenticate, ctrlWrapper(refreshUserSessionController));
+authRouter.post('/refresh', refreshSessionController);
+
 
 authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 
