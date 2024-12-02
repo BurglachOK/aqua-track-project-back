@@ -64,17 +64,18 @@ export const getWaterVolumePerDay = async (year, month, day, userId) => {
   };
   const data = await WaterVolume.find(query);
   const user = await UserCollection.findById(userId);
-  const dailyRequirement = user.dailyRequirement;
-  let totalDay = 0;
+  const statusdayAmount = user?.dailyRequirement || 2000;
+  let totalForDay = 0;
+  const items = [];
 
   const updatedData = data.map((item) => {
-    totalDay += item.volume;
-    return { ...item.toObject(), dailyRequirement };
+    totalForDay += item.volume;
+    return { ...item.toObject(), statusdayAmount };
   });
 
-  const progressDay = Math.round((totalDay / dailyRequirement) * 100);
+  const progressDay = Math.round((totalForDay / statusdayAmount) * 100);
 
-  return { data: updatedData, progressDay };
+  return { items: updatedData.length ? updatedData : items, progressDay };
 };
 
 export const getWaterVolumePerMonth = async (year, month, userId) => {
@@ -84,23 +85,27 @@ export const getWaterVolumePerMonth = async (year, month, userId) => {
   };
   const water = await WaterVolume.find(query);
   const user = await UserCollection.findById(userId);
-  const dailyRequirement = user.dailyRequirement;
+  const statusdayAmount = user?.dailyRequirement || 2000;
+  const total = 0;
+  const items = [];
   const result = water.reduce((acc, item) => {
     const date = item.date;
 
     if (!acc[date]) {
       acc[date] = {
         date: date,
-        volume: 0,
-        dailyRequirement: dailyRequirement,
+        waterAmount: 0,
+        statusdayAmount: statusdayAmount,
         percentage: 0,
-        entriesQuantity: 0
+        totalForDay: 0,
       };
     }
 
-    acc[date].volume += item.volume;
-    acc[date].entriesQuantity += 1;
-    acc[date].percentage = Math.round((acc[date].volume / acc[date].dailyRequirement) * 100) + '%';
+    acc[date].waterAmount += item.volume;
+    acc[date].totalForDay += 1;
+    acc[date].percentage =
+      Math.round((acc[date].waterAmount / acc[date].statusdayAmount) * 100) +
+      '%';
 
     return acc;
   }, {});

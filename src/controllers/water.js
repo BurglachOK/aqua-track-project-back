@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { createWaterVolume, deleteWaterVolume, getWaterVolumePerDay, getWaterVolumePerMonth, updateWaterVolume } from '../services/water';
+import { createWaterVolume, deleteWaterVolume, getWaterVolumePerDay, getWaterVolumePerMonth, updateWaterVolume } from '../services/water.js';
 
 export const createWaterController = async (req, res) => {
   const userId = req.user._id;

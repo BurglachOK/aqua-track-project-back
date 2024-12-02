@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { localDate, localTime } from '../../services/water';
+import { localDate, localTime } from '../../services/water.js';
 
 const waterSchema = new Schema(
   {
