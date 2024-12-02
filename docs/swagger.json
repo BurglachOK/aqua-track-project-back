@@ -281,6 +281,124 @@
         }
       }
     },
+    "/water/day": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get list of water",
+        "operationId": "getWaterVolumePerDay",
+        "description": "Get list of customer water for particular day with this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "description": "Only existing dates as format DD:MM:YYYY between 2020 and 2099 are acceptable",
+              "example": "01-12-2024"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return array with water for a day",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Water found!",
+                      "data": null,
+                      "$ref": "#/components/schemas/waterForMonth"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get list of drinks",
+        "operationId": "getWaterVolumePerMonth",
+        "description": "Get a list of customers water drinking for a specific month using this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "description": "Only existing dates as format MM:YYYY between 2020 and 2099 are acceptable ",
+              "example": "12-2024"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns an array with the amount of water per month",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found drinks!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/waterForMonth"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/auth/total-users": {
       "get": {
         "tags": [
@@ -1095,6 +1213,59 @@
             "description": "userId",
             "type": "string",
             "example": "66ad095ebb6eafe76d8d67d8"
+          }
+        }
+      },
+      "waterAmount": {
+        "type": "object",
+        "description": "Data about user consumption",
+        "required": [
+          "statusdayAmount",
+          "totalForDay",
+          "dayOfMonth"
+        ],
+        "properties": {
+          "statusdayAmount": {
+            "type": "number",
+            "example": 1720,
+            "description": "Sum of consumed water by user for one day in a given month"
+          },
+          "totalForDay": {
+            "type": "number",
+            "example": 3,
+            "description": "A number of entries for for one day in a given month"
+          },
+          "dayOfMonth": {
+            "type": "number",
+            "example": 5,
+            "description": "A day of a given month"
+          }
+        }
+      },
+      "waterForMonth": {
+        "type": "object",
+        "required": [
+          "items",
+          "waterAmount",
+          "total"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/water"
+            }
+          },
+          "waterAmount": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/waterAmount"
+            }
+          },
+          "total": {
+            "type": "number",
+            "example": 21,
+            "description": "Total entries for a given month"
           }
         }
       },
