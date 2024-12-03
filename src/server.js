@@ -17,6 +17,7 @@ const PORT = Number(env('PORT', '3000'));
 export const setupServer = () => {
   const app = express();
 
+  app.use(express.json());
   app.use(cors({
     origin: '*', // або '*', якщо дозволені всі домени
     // origin: ['https://aqua-track-project-back.onrender.com', 'http://localhost:3000/', 'http://localhost:5173/'], // або '*', якщо дозволені всі домени
