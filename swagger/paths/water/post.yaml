@@ -13,7 +13,7 @@ requestBody:
         required:
           - volume
           - date
-          - time
+          # - time
         properties:
           volume:
             description: 'Amount of water consumed in ml'
@@ -22,11 +22,11 @@ requestBody:
           date:
             description: 'Time of consumption'
             type: string
-            example: '29-11-2024'
-          time:
-            description: 'Time of consumption'
-            type: string
-            example: '18:00'
+            example: '2024-12-03 11:45'
+          # time:
+          #   description: 'Time of consumption'
+          #   type: string
+          #   example: '18:00'
 responses:
   '201':
     description: Successfully created a card!
@@ -38,6 +38,7 @@ responses:
             - status
             - message
             - data
+            - water
           properties:
             status:
               type: integer
