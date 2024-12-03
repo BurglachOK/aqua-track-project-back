@@ -37,7 +37,7 @@ waterRouter.patch(
 waterRouter.delete('/:waterId', isValidId, ctrlWrapper(deleteWaterController));
 
 waterRouter.get(
-  '/daily',
+  '/day',
   validateBody(searchByDayCardSchema),
   ctrlWrapper(getWaterPerDayController),
 );
