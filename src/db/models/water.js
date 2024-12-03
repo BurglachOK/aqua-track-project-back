@@ -16,15 +16,11 @@ const waterSchema = new Schema(
       type: String,
       default: () => localDate(),
     },
-    time: {
-      type: String,
-      default: () => localTime(),
-    },
   },
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 export const WaterVolume = model('water', waterSchema);
