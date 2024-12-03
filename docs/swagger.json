@@ -48,8 +48,7 @@
                 "type": "object",
                 "required": [
                   "volume",
-                  "date",
-                  "time"
+                  "date"
                 ],
                 "properties": {
                   "volume": {
@@ -60,12 +59,7 @@
                   "date": {
                     "description": "Time of consumption",
                     "type": "string",
-                    "example": "29-11-2024"
-                  },
-                  "time": {
-                    "description": "Time of consumption",
-                    "type": "string",
-                    "example": "18:00"
+                    "example": "2024-12-03 11:45"
                   }
                 }
               }
@@ -82,7 +76,8 @@
                   "required": [
                     "status",
                     "message",
-                    "data"
+                    "data",
+                    "water"
                   ],
                   "properties": {
                     "status": {
@@ -159,19 +154,13 @@
                   },
                   {
                     "required": [
-                      "date",
-                      "time"
+                      "date"
                     ],
                     "properties": {
                       "date": {
                         "description": "Time of consumption",
                         "type": "string",
-                        "example": "29-11-2024"
-                      },
-                      "time": {
-                        "description": "Time of consumption",
-                        "type": "string",
-                        "example": "21:00"
+                        "example": "2024-12-03 21:00"
                       }
                     }
                   }
@@ -300,8 +289,8 @@
             "name": "date",
             "schema": {
               "type": "string",
-              "description": "Only existing dates as format DD:MM:YYYY between 2020 and 2099 are acceptable",
-              "example": "01-12-2024"
+              "description": "Only existing dates as format YYYY:MM:DD between 2020 and 2099 are acceptable",
+              "example": "2024-12-03"
             }
           }
         ],
@@ -358,8 +347,8 @@
             "name": "date",
             "schema": {
               "type": "string",
-              "description": "Only existing dates as format MM:YYYY between 2020 and 2099 are acceptable ",
-              "example": "12-2024"
+              "description": "Only existing dates as format YYYY:MM between 2020 and 2099 are acceptable ",
+              "example": "2024-12"
             }
           }
         ],
@@ -517,17 +506,6 @@
         "security": [
           {
             "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
           }
         ],
         "responses": {
@@ -1185,7 +1163,6 @@
           "_id",
           "volume",
           "date",
-          "time",
           "userId"
         ],
         "properties": {
@@ -1202,12 +1179,7 @@
           "date": {
             "description": "Date of consumption",
             "type": "string",
-            "example": "29-11-2024"
-          },
-          "time": {
-            "description": "Time of consumption",
-            "type": "string",
-            "example": "21-00"
+            "example": "2024-12-03 12:33"
           },
           "userId": {
             "description": "userId",
