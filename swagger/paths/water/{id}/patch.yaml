@@ -27,16 +27,11 @@ requestBody:
                 example: 200
           - required:
               - date
-              - time
             properties:
               date:
                 description: 'Time of consumption'
                 type: string
-                example: '29-11-2024'
-              time:
-                description: 'Time of consumption'
-                type: string
-                example: '21:00'
+                example: '2024-12-03 21:00'
 responses:
   '200':
     description: Successfully patched a card!

@@ -10,8 +10,8 @@ parameters:
     name: date
     schema:
       type: string
-      description: 'Only existing dates as format MM:YYYY between 2020 and 2099 are acceptable '
-      example: '12-2024'
+      description: 'Only existing dates as format YYYY:MM between 2020 and 2099 are acceptable '
+      example: '2024-12'
 responses:
   '200':
     description: Returns an array with the amount of water per month
