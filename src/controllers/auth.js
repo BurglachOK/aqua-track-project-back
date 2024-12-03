@@ -26,9 +26,8 @@ export const registerUserController = async (req, res) => {
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user! There is your AuthToken',
-    data: { newUser, accessToken: session.accessToken, }
-  },
-  );
+    data: { newUser, accessToken: session.accessToken },
+  });
 };
 
 export const loginUserController = async (req, res) => {
@@ -82,6 +81,8 @@ export const refreshUserSessionController = async (req, res) => {
   });
 
   setupSession(res, session);
+  // setupSession(res, session._id, session.refreshToken);
+  // замінити сетап той що вище
 
   res.json({
     status: 200,

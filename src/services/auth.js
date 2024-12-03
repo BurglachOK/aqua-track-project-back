@@ -51,6 +51,17 @@ export const loginUser = async (payload) => {
 
   await SessionsCollection.deleteOne({ userId: user._id });
 
+  //   const newSession = createSession();
+
+  //   const session = await SessionsCollection.create({
+  //     userId: user._id,
+  //     ...newSession,
+  //   });
+
+  //   return { user, session };
+  // };
+  // це замість того що нижче.
+
   const accessToken = randomBytes(30).toString('base64');
   const refreshToken = randomBytes(30).toString('base64');
 
