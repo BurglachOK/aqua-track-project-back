@@ -10,6 +10,7 @@ import {
 } from '../services/auth.js';
 import { env } from '../utils/env.js';
 import * as authServices from '../services/auth.js';
+import { filterResUser } from '../utils/filterResUser.js';
 
 const setupSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
@@ -39,13 +40,28 @@ export const registerController = async (req, res) => {
 };
 
 export const loginController = async (req, res) => {
-  const session = await authServices.login(req.body);
-  setupSession(res, session);
+  //   const session = await authServices.login(req.body);
+  //   setupSession(res, session);
+
+  //   res.json({
+  //     status: 200,
+  //     message: 'Successfully login',
+  //     data: {
+  //       accessToken: session.accessToken,
+  //     },
+  //   });
+  // };
+  const { user, session } = await authServices.login(req.body);
+
+  const userWithoutTimestamps = filterResUser(user);
+
+  setupSession(res, session._id, session.refreshToken);
 
   res.json({
     status: 200,
-    message: 'Successfully login',
+    message: 'Successfully logged in a user!',
     data: {
+      user: userWithoutTimestamps,
       accessToken: session.accessToken,
     },
   });
