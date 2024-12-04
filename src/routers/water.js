@@ -44,7 +44,7 @@ waterRouter.get(
 
 waterRouter.get(
   '/month',
-  validateBody(searchByMonthCardSchema),
+  
   ctrlWrapper(getWaterPerMonthController),
 );
 

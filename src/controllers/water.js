@@ -54,11 +54,12 @@ export const getWaterPerDayController = async (req, res, next) => {
 };
 
 export const getWaterPerMonthController = async (req, res, next) => {
+console.log(req.query)
+  const year = req.query.year; 
+    const month = req.query.month; 
+    const userId = req.user._id; 
   
-  const year=req.body.date.split("-")[0];
-  const month = req.body.date.split("-")[1];
-  const userId = req.user._id;
- 
+  
   const waterMonth = await getWaterVolumePerMonth(year, month, userId);
   res.status(200).json({ data: waterMonth });
 };
