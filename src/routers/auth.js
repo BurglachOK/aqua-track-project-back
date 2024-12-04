@@ -26,6 +26,9 @@ import {
   sendVerificationEmailController,
   verifyEmailController,
 } from '../controllers/auth.js';
+import { authenticate } from '../middlewares/authenticate.js';
+import { auth } from 'google-auth-library';
+
 
 const authRouter = Router();
 const jsonParser = express.json();
@@ -44,9 +47,9 @@ authRouter.post(
   ctrlWrapper(loginController),
 );
 
-authRouter.post('/refresh', ctrlWrapper(refreshController));
+authRouter.post('/refresh', authenticate, ctrlWrapper(refreshController));
 
-authRouter.post('/logout', ctrlWrapper(logoutController));
+authRouter.post('/logout', authenticate, ctrlWrapper(logoutController));
 
 authRouter.post(
   '/send-reset-email',
@@ -64,11 +67,13 @@ authRouter.post(
 
 authRouter.get(
   '/current-user',
+  authenticate,
   ctrlWrapper(getCurrentUserController),
 );
 
 authRouter.patch(
   '/update-user',
+  authenticate,
   jsonParser,
   upload.single('avatar'),
   validateBody(updateUserSchema),
