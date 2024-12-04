@@ -27,8 +27,6 @@ import {
   verifyEmailController,
 } from '../controllers/auth.js';
 import { authenticate } from '../middlewares/authenticate.js';
-import { auth } from 'google-auth-library';
-
 
 const authRouter = Router();
 const jsonParser = express.json();
