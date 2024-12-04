@@ -1,6 +1,5 @@
 import { UserCollection } from '../db/models/user.js';
 // import { HttpError } from 'http-errors';
-import { UsersCollection } from '../db/models/user.js';
 
 export const getCurrentUser = async ({ userId }) => {
   const user = await UserCollection.findById(userId);
@@ -30,7 +29,7 @@ export const getCurrentUser = async ({ userId }) => {
 //     return user;
 // };
 export const updateUser = async (userId, data, options = {}) => {
-  const result = await UsersCollection.findOneAndUpdate({ _id: userId }, data, {
+  const result = await UserCollection.findOneAndUpdate({ _id: userId }, data, {
     new: true,
     includeResultMetadata: true,
     ...options,
