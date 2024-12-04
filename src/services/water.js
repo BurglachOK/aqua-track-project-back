@@ -64,7 +64,7 @@ export const getWaterVolumePerDay = async (year, month, day, userId) => {
   };
   const data = await WaterVolume.find(query);
   const user = await UserCollection.findById(userId);
-  const statusdayAmount = user?.dailyRequirement || 2000;
+  const statusdayAmount = user?.dailyRequirement || 1500;
   let totalForDay = 0;
   const items = [];
 
@@ -79,18 +79,12 @@ export const getWaterVolumePerDay = async (year, month, day, userId) => {
 };
 
 export const getWaterVolumePerMonth = async (year, month, userId) => {
-  
-
   const water = await WaterVolume.find({
     userId: userId,
     date: {
-      $regex: new RegExp(`^${year}-${month}`) 
-    }
+      $regex: new RegExp(`^${year}-${month}`),
+    },
   });
- 
-  
-  
-  
 
   return water;
 };
