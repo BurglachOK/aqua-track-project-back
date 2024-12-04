@@ -78,30 +78,56 @@ export const login = async (payload) => {
 export const findSessionByAccessToken = (accessToken) =>
   SessionsCollection.findOne({ accessToken });
 
-export const refreshSession = async ({ refreshToken, sessionId }) => {
-  const oldSession = await SessionsCollection.findOne({
+// export const refreshSession = async ({ refreshToken, sessionId }) => {
+//   const oldSession = await SessionsCollection.findOne({
+//     _id: sessionId,
+//     refreshToken,
+//   });
+
+//   if (!oldSession) {
+//     throw createHttpError(401, 'Session not found');
+//   }
+
+//   if (new Date() > oldSession.refreshTokenValidUntil) {
+//     throw createHttpError(401, 'Session token expired');
+//   }
+
+//   await SessionsCollection.deleteOne({ _id: sessionId });
+
+//   const sessionData = createSession();
+
+//   const userSession = await SessionsCollection.create({
+//     userId: oldSession._id,
+//     ...sessionData,
+//   });
+
+//   return userSession;
+// };
+export const refreshSession = async ({ sessionId, refreshToken }) => {
+  const session = await SessionsCollection.findOne({
     _id: sessionId,
     refreshToken,
   });
 
-  if (!oldSession) {
+  if (!session) {
     throw createHttpError(401, 'Session not found');
   }
 
-  if (new Date() > oldSession.refreshTokenValidUntil) {
+  const isSessionTokenExpired =
+    new Date() > new Date(session.refreshTokenValidUntil);
+
+  if (isSessionTokenExpired) {
     throw createHttpError(401, 'Session token expired');
   }
 
-  await SessionsCollection.deleteOne({ _id: sessionId });
+  const newSession = createSession();
 
-  const sessionData = createSession();
+  await SessionsCollection.deleteOne({ _id: sessionId, refreshToken });
 
-  const userSession = await SessionsCollection.create({
-    userId: oldSession._id,
-    ...sessionData,
+  return await SessionsCollection.create({
+    userId: session.userId,
+    ...newSession,
   });
-
-  return userSession;
 };
 
 export const logout = async (sessionId) => {

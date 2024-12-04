@@ -3,7 +3,11 @@ import { loginOrRegisterUser } from '../services/auth.js';
 import { requestResetToken, resetPassword } from '../services/auth.js';
 
 import { generateOuthURL, validateCode } from '../utils/googleOAuth2.js';
-import { sendVerificationEmail, verifyEmail } from '../services/auth.js';
+import {
+  sendVerificationEmail,
+  verifyEmail,
+  refreshSession,
+} from '../services/auth.js';
 import { env } from '../utils/env.js';
 import * as authServices from '../services/auth.js';
 
@@ -28,7 +32,8 @@ export const registerController = async (req, res) => {
     status: 201,
     message: 'Successfully register user',
     data: {
-      accessToken: session.accessToken, newUser
+      accessToken: session.accessToken,
+      newUser,
     },
   });
 };
@@ -47,13 +52,19 @@ export const loginController = async (req, res) => {
 };
 
 export const refreshController = async (req, res) => {
-  const { refreshToken, sessionId } = req.cookies;
-  const session = await authServices.refreshSession({
-    refreshToken,
-    sessionId,
+  // const { refreshToken, sessionId } = req.cookies;
+  // const session = await authServices.refreshSession({
+  //   refreshToken,
+  //   sessionId,
+  // });
+
+  // setupSession(res, session);
+  const session = await refreshSession({
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
   });
 
-  setupSession(res, session);
+  setupSession(res, session._id, session.refreshToken);
 
   res.json({
     status: 200,

@@ -22,7 +22,18 @@ export const setupServer = () => {
   app.use(express.json());
   app.use(
     cors({
-      origin: env('APP_DOMAIN')?.split(', ') ?? [],
+      origin: (origin, callback) => {
+        const allowedOrigins = [
+          'http://localhost:5173',
+          'https://aqua-track-project-back.onrender.com/api-docs/',
+          'http://localhost:3000',
+        ];
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       credentials: true,
     }),
   );
