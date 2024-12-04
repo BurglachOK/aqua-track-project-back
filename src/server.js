@@ -20,7 +20,12 @@ export const setupServer = () => {
 
   app.use(logger);
   app.use(express.json());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: env('APP_DOMAIN')?.split(', ') ?? [],
+      credentials: true,
+    }),
+  );
 
   app.use(cookieParser());
 
