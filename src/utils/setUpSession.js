@@ -1,14 +1,16 @@
 import { THIRTY_DAYS } from '../constants/constants.js';
 
-export const setupSession = (res, session) => {
-    res.cookie('refreshToken', session.refreshToken, {
+export const setupSession = (res, sessionId, refreshToken) => {
+    res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: true,
         expires: new Date(Date.now() + THIRTY_DAYS),
+        sameSite: 'none',
+        secure: true,
     });
-    res.cookie('sessionId', session._id, {
+    res.cookie('sessionId', sessionId, {
         httpOnly: true,
-        secure: true,
         expires: new Date(Date.now() + THIRTY_DAYS),
+        sameSite: 'none',
+        secure: true,
     });
 };
