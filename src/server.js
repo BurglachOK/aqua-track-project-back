@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import logger from './middlewares/logger.js';
 
 import { env } from './utils/env.js';
 import cookieParser from 'cookie-parser';
@@ -17,6 +18,7 @@ const PORT = Number(env('PORT', '3000'));
 export const setupServer = () => {
   const app = express();
 
+  app.use(logger);
   app.use(express.json());
   app.use(
     cors({

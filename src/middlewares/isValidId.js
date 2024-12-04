@@ -1,11 +1,10 @@
-import createHttpError from "http-errors";
-import isValidObjectId from "mongoose";
-
+import { isValidObjectId } from 'mongoose';
+import createHttpError from 'http-errors';
 
 export const isValidId = (req, res, next) => {
-  const { waterId } = req.params;
-  if (!isValidObjectId(waterId)) {
-    next(createHttpError(404, `${waterId} is not valid id`));
+  const { id } = req.params;
+  if (!isValidObjectId(id)) {
+    return next(createHttpError(404, `${id} not valid id`));
   }
   next();
 };

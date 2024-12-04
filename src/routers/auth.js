@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { registerUserSchema } from '../validation/user.js';
-import { registerUserController } from '../controllers/auth.js';
+import { registerController } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { loginUserSchema } from '../validation/user.js';
-import { loginUserController } from '../controllers/auth.js';
-import { logoutUserController } from '../controllers/auth.js';
-import { refreshUserSessionController } from '../controllers/auth.js';
+import { loginController } from '../controllers/auth.js';
+import { logoutController } from '../controllers/auth.js';
+import { refreshController } from '../controllers/auth.js';
 import express from 'express';
 import { requestResetEmailSchema } from '../validation/user.js';
 import { requestResetEmailController } from '../controllers/auth.js';
@@ -15,7 +15,6 @@ import { resetPasswordController } from '../controllers/auth.js';
 import { updateUserSchema } from '../validation/user.js';
 import { upload } from '../middlewares/multer.js';
 import { updateUserController } from '../controllers/user.js';
-import { authenticate } from '../middlewares/authenticate.js';
 import { getCurrentUserController } from '../controllers/user.js';
 import { getTotalUsersController } from '../controllers/user.js';
 import {
@@ -27,6 +26,9 @@ import {
   sendVerificationEmailController,
   verifyEmailController,
 } from '../controllers/auth.js';
+import { authenticate } from '../middlewares/authenticate.js';
+import { auth } from 'google-auth-library';
+
 
 const authRouter = Router();
 const jsonParser = express.json();
@@ -35,19 +37,19 @@ authRouter.post(
   '/register',
   jsonParser,
   validateBody(registerUserSchema),
-  ctrlWrapper(registerUserController),
+  ctrlWrapper(registerController),
 );
 
 authRouter.post(
   '/login',
   jsonParser,
   validateBody(loginUserSchema),
-  ctrlWrapper(loginUserController),
+  ctrlWrapper(loginController),
 );
 
-authRouter.post('/refresh', authenticate, ctrlWrapper(refreshUserSessionController));
+authRouter.post('/refresh', authenticate, ctrlWrapper(refreshController));
 
-authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
+authRouter.post('/logout', authenticate, ctrlWrapper(logoutController));
 
 authRouter.post(
   '/send-reset-email',
@@ -71,8 +73,8 @@ authRouter.get(
 
 authRouter.patch(
   '/update-user',
-  jsonParser,
   authenticate,
+  jsonParser,
   upload.single('avatar'),
   validateBody(updateUserSchema),
   ctrlWrapper(updateUserController),
@@ -91,7 +93,6 @@ authRouter.post(
 
 authRouter.get(
   '/send-verification-email',
-  authenticate,
   ctrlWrapper(sendVerificationEmailController),
 );
 

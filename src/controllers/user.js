@@ -1,7 +1,5 @@
-import { updateUser } from '../services/user.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
-import { getCurrentUser } from '../services/user.js';
-import { getTotalUsers } from '../services/user.js';
+import { getCurrentUser, updateUser, getTotalUsers } from '../services/user.js';
 
 export const updateUserController = async (req, res) => {
   if (!req.user || !req.user._id) {
