@@ -64,7 +64,7 @@ export const getWaterVolumePerDay = async (year, month, day, userId) => {
   };
   const data = await WaterVolume.find(query);
   const user = await UserCollection.findById(userId);
-  const statusdayAmount = user?.dailyRequirement || 2000;
+  const statusdayAmount = user?.dailyRequirement || 1500;
   let totalForDay = 0;
   const items = [];
 
@@ -79,46 +79,12 @@ export const getWaterVolumePerDay = async (year, month, day, userId) => {
 };
 
 export const getWaterVolumePerMonth = async (year, month, userId) => {
-  const query = {
-    userId,
-    date: { $regex: `${month}.${year}` },
-  };
-  const water = await WaterVolume.find(query);
-  const user = await UserCollection.findById(userId);
-  const statusdayAmount = user?.dailyRequirement || 2000;
-  const total = 0;
-  const items = [];
-  const result = water.reduce((acc, item) => {
-    const date = item.date;
-
-    if (!acc[date]) {
-      acc[date] = {
-        date: date,
-        waterAmount: 0,
-        statusdayAmount: statusdayAmount,
-        percentage: 0,
-        totalForDay: 0,
-      };
-    }
-
-    acc[date].waterAmount += item.volume;
-    acc[date].totalForDay += 1;
-    acc[date].percentage =
-      Math.round((acc[date].waterAmount / acc[date].statusdayAmount) * 100) +
-      '%';
-
-    return acc;
-  }, {});
-
-  const sortedResult = Object.values(result).sort((a, b) => {
-    const [dayA, monthA, yearA] = a.date.split('.').map(Number);
-    const [dayB, monthB, yearB] = b.date.split('.').map(Number);
-
-    const dateA = new Date(yearA, monthA - 1, dayA);
-    const dateB = new Date(yearB, monthB - 1, dayB);
-
-    return dateA - dateB;
+  const water = await WaterVolume.find({
+    userId: userId,
+    date: {
+      $regex: new RegExp(`^${year}-${month}`),
+    },
   });
 
-  return sortedResult;
+  return water;
 };
