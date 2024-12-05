@@ -1,4 +1,4 @@
-import { WaterCollection } from '../db/models/water.js';
+import { WaterVolume } from '../db/models/water.js';
 
 export const actualAmountDayWater = async (userId) => {
   const day = new Date().toISOString().slice(0, 10);
@@ -14,7 +14,7 @@ export const actualAmountDayWater = async (userId) => {
     },
   );
 
-  const dayWaterValue = await WaterCollection.aggregate(pipeline);
+  const dayWaterValue = await WaterVolume.aggregate(pipeline);
   let value = 0;
   if (dayWaterValue.length > 0) {
     value = dayWaterValue[0].total_value;

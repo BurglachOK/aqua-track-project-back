@@ -8,7 +8,7 @@ import {
 // const dateRegex = /^((0[1-9]|[1-2][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4})$/;
 // const timeRegex = /^(?:2[0-4]|[01]?\d):(?:[0-5]\d)$/;
 
-export const createCardSchema = Joi.object({
+export const createWaterVolumeSchema = Joi.object({
   volume: Joi.number().integer().required().min(1).max(5000).messages({
     'number.base': 'Amount should be a number',
     'number.min': 'Amount should be at least 1 ml',
@@ -32,7 +32,7 @@ export const createCardSchema = Joi.object({
 //     .message('Time must be hh:mm / Where hh: 00-24, mm: 00-59'),
 // }).options({ abortEarly: false });
 
-export const updateCardSchema = Joi.object({
+export const updateWaterVolumeSchema = Joi.object({
   volume: Joi.number().integer().min(1).max(5000).messages({
     'number.base': 'Amount should be a number',
     'number.min': 'Amount should be at least 1 ml',
