@@ -4,17 +4,21 @@ import { validateBody } from '../middlewares/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import {
-  createWaterVolumeSchema,
+  // createWaterVolumeSchema,
+  // searchByDayCardSchema,
+  // // searchByMonthCardSchema,
+  // updateWaterVolumeSchema,
+  createCardSchema,
   searchByDayCardSchema,
-  // searchByMonthCardSchema,
-  updateWaterVolumeSchema,
+  searchByMonthCardSchema,
+  updateCardSchema,
 } from '../validation/water.js';
 import {
-  createWaterController,
-  deleteWaterController,
-  getWaterPerDayController,
-  getWaterPerMonthController,
-  patchWaterVolumeController,
+  createCardController,
+  patchCardController,
+  deleteCardController,
+  getMonthWaterController,
+  getDayhWaterController,
 } from '../controllers/water.js';
 
 const waterRouter = Router();
@@ -23,29 +27,29 @@ waterRouter.use(authenticate);
 
 waterRouter.post(
   '/',
-  validateBody(createWaterVolumeSchema),
-  ctrlWrapper(createWaterController),
+  validateBody(createCardSchema),
+  ctrlWrapper(createCardController),
 );
 
 waterRouter.patch(
-  '/:waterId',
+  '/:cardId',
   isValidId,
-  validateBody(updateWaterVolumeSchema),
-  ctrlWrapper(patchWaterVolumeController),
+  validateBody(updateCardSchema),
+  ctrlWrapper(patchCardController),
 );
 
-waterRouter.delete('/:waterId', isValidId, ctrlWrapper(deleteWaterController));
+waterRouter.delete('/:cardId', isValidId, ctrlWrapper(deleteCardController));
 
 waterRouter.get(
   '/day',
   validateBody(searchByDayCardSchema),
-  ctrlWrapper(getWaterPerDayController),
+  ctrlWrapper(getDayhWaterController),
 );
 
 waterRouter.get(
   '/month',
-
-  ctrlWrapper(getWaterPerMonthController),
+  validateBody(searchByMonthCardSchema),
+  ctrlWrapper(getMonthWaterController),
 );
 
 export default waterRouter;

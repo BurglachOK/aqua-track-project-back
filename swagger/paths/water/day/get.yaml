@@ -1,7 +1,7 @@
 tags:
   - Water
 summary: Get list of water
-operationId: getWaterVolumePerDay
+operationId: getDayWater
 description: 'Get list of customer water for particular day with this endpoint'
 security:
   - bearerAuth: []
