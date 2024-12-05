@@ -20,24 +20,23 @@ export const setupServer = () => {
 
   app.use(logger);
   app.use(express.json());
-  app.use(cors());
-  //   cors({
-  //     origin: (origin, callback) => {
-  //       const allowedOrigins = [
-  //         'http://localhost:5173',
-  //         'aqua-track-project.netlify.app',
-  //         'https://aqua-track-project-back.onrender.com',
-  //         'http://localhost:3000',
-  //       ];
-  //       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-  //         callback(null, true);
-  //       } else {
-  //         callback(new Error('Not allowed by CORS'));
-  //       }
-  //     },
-  //     credentials: true,
-  //   }),
-  // );
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        const allowedOrigins = [
+          'http://localhost:5173',
+          'https://aqua-track-project-back.onrender.com/api-docs/',
+          'http://localhost:3000',
+        ];
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,
+    }),
+  );
 
   app.use(cookieParser());
 
