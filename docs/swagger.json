@@ -77,7 +77,7 @@
                     "status",
                     "message",
                     "data",
-                    "water"
+                    "actualDayWater"
                   ],
                   "properties": {
                     "status": {
@@ -92,7 +92,7 @@
                       "type": "object",
                       "$ref": "#/components/schemas/water"
                     },
-                    "water": {
+                    "actualDayWater": {
                       "type": "integer",
                       "example": 1350
                     }
@@ -116,7 +116,7 @@
           "Water"
         ],
         "summary": "Patch water card by id",
-        "operationId": "updateWaterVolume",
+        "operationId": "patchCard",
         "description": "Update info on existing water card with given id",
         "security": [
           {
@@ -180,7 +180,7 @@
                     "status",
                     "message",
                     "data",
-                    "water"
+                    "actualDayWater"
                   ],
                   "properties": {
                     "status": {
@@ -194,6 +194,10 @@
                     "data": {
                       "type": "object",
                       "$ref": "#/components/schemas/water"
+                    },
+                    "actualDayWater": {
+                      "type": "integer",
+                      "example": 1350
                     }
                   }
                 }
@@ -213,7 +217,7 @@
           "Water"
         ],
         "summary": "Delete water card by id",
-        "operationId": "deleteWaterVolume",
+        "operationId": "deleteCard",
         "description": "Delete existing water card with given id",
         "security": [
           {
@@ -241,7 +245,7 @@
                   "required": [
                     "status",
                     "message",
-                    "water"
+                    "actualDayWater"
                   ],
                   "properties": {
                     "status": {
@@ -252,7 +256,7 @@
                       "type": "string",
                       "example": "Successfully patched a card!"
                     },
-                    "water": {
+                    "actualDayWater": {
                       "type": "integer",
                       "example": 1350
                     }
@@ -276,7 +280,7 @@
           "Water"
         ],
         "summary": "Get list of water",
-        "operationId": "getWaterVolumePerDay",
+        "operationId": "getDayWater",
         "description": "Get list of customer water for particular day with this endpoint",
         "security": [
           {
@@ -334,7 +338,7 @@
           "Water"
         ],
         "summary": "Get list of drinks",
-        "operationId": "getWaterVolumePerMonth",
+        "operationId": "getMonthWater",
         "description": "Get a list of customers water drinking for a specific month using this endpoint",
         "security": [
           {
@@ -593,12 +597,12 @@
                     "type": "number",
                     "example": 70
                   },
-                  "activeTime": {
+                  "dailyActivityTime": {
                     "description": "User daily activity time in hours",
                     "type": "number",
                     "example": 2
                   },
-                  "dailyNorm": {
+                  "dailyWaterNorm": {
                     "description": "User daily water intake norm in liters",
                     "type": "number",
                     "example": 1.5
@@ -1278,12 +1282,12 @@
             "type": "number",
             "example": 70
           },
-          "activeTime": {
+          "dailyActivityTime": {
             "description": "User daily activity time in hours",
             "type": "number",
             "example": 2
           },
-          "dailyNorm": {
+          "dailyWaterNorm": {
             "description": "User daily water intake norm in liters",
             "type": "number",
             "example": 1.5
