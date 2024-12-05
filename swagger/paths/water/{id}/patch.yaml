@@ -1,7 +1,7 @@
 tags:
   - Water
 summary: Patch water card by id
-operationId: patchCard
+operationId: updateWaterVolume
 description: 'Update info on existing water card with given id'
 security:
   - bearerAuth: []
@@ -43,7 +43,7 @@ responses:
             - status
             - message
             - data
-            - actualDayWater
+            - water
           properties:
             status:
               type: integer
@@ -54,9 +54,6 @@ responses:
             data:
               type: object
               $ref: '../../../components/schemas/water.yaml'
-            actualDayWater:
-              type: integer
-              example: 1350
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':
