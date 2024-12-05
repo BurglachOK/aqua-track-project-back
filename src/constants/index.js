@@ -27,3 +27,8 @@ export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
 export const accessTokenLifetime = 1000 * 60 * 15;
 
 export const refreshTokenLifetime = 1000 * 60 * 60 * 24;
+
+export const PARSE_DATE_PARAMS = [8, 10];
+
+export const SORT_BY = ['date', '_id'];
+export const SORT_ORDER_ARRAY = [1, -1];

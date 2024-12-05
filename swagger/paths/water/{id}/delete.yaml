@@ -1,7 +1,7 @@
 tags:
   - Water
 summary: Delete water card by id
-operationId: deleteWaterVolume
+operationId: deleteCard
 description: 'Delete existing water card with given id'
 security:
   - bearerAuth: []
@@ -22,7 +22,7 @@ responses:
           required:
             - status
             - message
-            - water
+            - actualDayWater
           properties:
             status:
               type: integer
@@ -30,7 +30,7 @@ responses:
             message:
               type: string
               example: Successfully patched a card!
-            water:
+            actualDayWater:
               type: integer
               example: 1350
   '401':

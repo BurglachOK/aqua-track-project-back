@@ -21,9 +21,9 @@ properties:
     description: 'Timestamp indicating when the access token expires'
     type: string
     format: date-time
-    example: '2024-08-04T12:00:00Z'
+    example: '2024-12-05T12:00:00Z'
   refreshTokenValidUntil:
     description: 'Timestamp indicating when the refresh token expires'
     type: string
     format: date-time
-    example: '2024-08-04T12:00:00Z'
+    example: '2024-12-05T12:00:00Z'
