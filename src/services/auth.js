@@ -2,7 +2,7 @@ import { UserCollection } from '../db/models/user.js';
 import bcrypt from 'bcrypt';
 import crypto from 'node:crypto';
 import createHttpError from 'http-errors';
-import { randomBytes } from 'crypto';
+// import { randomBytes } from 'crypto';
 import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/index.js';
 import { TEMPLATES_DIR } from '../constants/index.js';
 import { SessionsCollection } from '../db/models/session.js';
@@ -12,23 +12,24 @@ import { sendEmail } from '../utils/sendMail.js';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { refreshTokenLifetime } from '../constants/index.js';
-import { accessTokenLifetime } from '../constants/index.js';
+// import { refreshTokenLifetime } from '../constants/index.js';
+// import { accessTokenLifetime } from '../constants/index.js';
 import 'dotenv/config';
+import { createSession } from '../utils/createSession.js';
 
-const createSession = () => {
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
-  const accessTokenValidUntil = new Date(Date.now() + accessTokenLifetime);
-  const refreshTokenValidUntil = new Date(Date.now() + refreshTokenLifetime);
+// const createSession = () => {
+//   const accessToken = randomBytes(30).toString('base64');
+//   const refreshToken = randomBytes(30).toString('base64');
+//   const accessTokenValidUntil = new Date(Date.now() + accessTokenLifetime);
+//   const refreshTokenValidUntil = new Date(Date.now() + refreshTokenLifetime);
 
-  return {
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil,
-    refreshTokenValidUntil,
-  };
-};
+//   return {
+//     accessToken,
+//     refreshToken,
+//     accessTokenValidUntil,
+//     refreshTokenValidUntil,
+//   };
+// };
 
 const appDomain = env('APP_DOMAIN');
 console.log(appDomain);
