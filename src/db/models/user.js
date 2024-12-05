@@ -8,7 +8,7 @@ const usersSchema = new Schema(
     gender: { type: String, default: 'female' },
     weight: { type: Number },
     activeTime: { type: Number },
-    dailyNorm: { type: Number },
+    dailyNorm: { type: Number, default:1.5 },
     avatar: { type: String, default: 'https://res.cloudinary.com/dfsy8w2ey/image/upload/v1733000750/fgag3jpord5egbrmc1ns.jpg' },
     userId: { type: Schema.Types.ObjectId, ref: 'users' },
     verifyEmail: { type: Boolean, default: false },
