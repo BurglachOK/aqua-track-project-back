@@ -11,18 +11,19 @@ import {
 import { env } from '../utils/env.js';
 import * as authServices from '../services/auth.js';
 import { filterResUser } from '../utils/filterResUser.js';
+import { setupSession } from '../utils/createSession.js';
 
-const setupSession = (res, session) => {
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expire: new Date(Date.now() + session.refreshTokenValidUntil),
-  });
+// const setupSession = (res, session) => {
+//   res.cookie('refreshToken', session.refreshToken, {
+//     httpOnly: true,
+//     expire: new Date(Date.now() + session.refreshTokenValidUntil),
+//   });
 
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expire: new Date(Date.now() + session.refreshTokenValidUntil),
-  });
-};
+//   res.cookie('sessionId', session._id, {
+//     httpOnly: true,
+//     expire: new Date(Date.now() + session.refreshTokenValidUntil),
+//   });
+// };
 
 export const registerController = async (req, res) => {
   const newUser = await authServices.register(req.body);
