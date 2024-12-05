@@ -18,15 +18,18 @@ export const createWaterController = async (req, res) => {
   });
 };
 
-export const patchWaterVolumeController = async (req, res, next) => {
+export const patchWaterVolumeController = async (req, res) => {
   const userId = req.user._id;
   const { waterId } = req.params;
 
   const result = await updateWaterVolume(waterId, { ...req.body }, userId);
 
   if (!result) {
-    next(createHttpError(404, 'Water volume not found'));
-    return;
+    throw createHttpError(404, 'Water volume not found', {
+      data: {
+        message: `Card with ${cardId} not found`,
+      },
+    });
   }
 
   const status = result.isNew ? 201 : 200;
@@ -38,18 +41,19 @@ export const patchWaterVolumeController = async (req, res, next) => {
   });
 };
 
-export const deleteWaterController = async (req, res, next) => {
+export const deleteWaterController = async (req, res) => {
   const userId = req.user._id;
   const { waterId } = req.params;
 
   const water = deleteWaterVolume(waterId, userId);
 
   if (!water) {
-    next(createHttpError(404, 'Water volume not found!'));
-    return;
+    throw createHttpError(404, 'Water volume not found!', {
+      data: {
+        message: `Card with ${cardId} not found`,
+      },
+    });
   }
-
-  res.status(204).send();
 };
 
 export const getWaterPerDayController = async (req, res, next) => {

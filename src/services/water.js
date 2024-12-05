@@ -50,9 +50,10 @@ export const updateWaterVolume = async (
   };
 };
 
-export const deleteWaterVolume = async (waterId) => {
+export const deleteWaterVolume = async (waterId, userId) => {
   const water = await WaterVolume.findOneAndDelete({
     _id: waterId,
+    userId,
   });
   return water;
 };
