@@ -6,40 +6,64 @@ import {
   getWaterVolumePerMonth,
   updateWaterVolume,
 } from '../services/water.js';
+import { actualAmountDayWater } from '../utils/actualAmountDayWater.js';
 
 export const createWaterController = async (req, res) => {
-  const userId = req.user._id;
-  const water = await createWaterVolume({ ...req.body }, userId);
+  //   const userId = req.user._id;
+  //   const water = await createWaterVolume({ ...req.body }, userId);
 
+  //   res.status(201).json({
+  //     status: 201,
+  //     message: 'Successfully created!',
+  //     data: water,
+  //   });
+  // };
+  const waterCard = {
+    ...req.body,
+    userId: req.user._id,
+  };
+  const water = await createWaterVolume(waterCard, req);
+  const actualDayWater = await actualAmountDayWater(req.user._id);
   res.status(201).json({
     status: 201,
-    message: 'Successfully created!',
-    data: water,
+    message: `Successfully created a card!`,
+    water,
+    actualDayWater,
   });
 };
 
 export const patchWaterVolumeController = async (req, res) => {
   const userId = req.user._id;
+  const payload = req.body;
   const { waterId } = req.params;
 
-  const result = await updateWaterVolume(waterId, { ...req.body }, userId);
+  const patchWaterVolume = await updateWaterVolume(waterId, payload, userId);
 
-  if (!result) {
+  if (!patchWaterVolume) {
     throw createHttpError(404, 'Water volume not found', {
       data: {
-        message: `Card with ${cardId} not found`,
+        message: `Card with ${waterId} not found`,
       },
     });
   }
+  const actualDayWater = await actualAmountDayWater(req.user._id);
 
-  const status = result.isNew ? 201 : 200;
-
-  res.status(status).json({
-    status,
-    message: 'Successfully updated water volume!',
-    data: result.water,
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully patched a card!',
+    data: patchWaterVolume.water,
+    actualDayWater,
   });
 };
+
+//   const status = result.isNew ? 201 : 200;
+
+//   res.status(status).json({
+//     status,
+//     message: 'Successfully updated water volume!',
+//     data: result.water,
+//   });
+// };
 
 export const deleteWaterController = async (req, res) => {
   const userId = req.user._id;
@@ -50,10 +74,17 @@ export const deleteWaterController = async (req, res) => {
   if (!water) {
     throw createHttpError(404, 'Water volume not found!', {
       data: {
-        message: `Card with ${cardId} not found`,
+        message: `Card with ${waterId} not found`,
       },
     });
   }
+  const actualDayWater = await actualAmountDayWater(req.user._id);
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully deleted a card!',
+    actualDayWater,
+  });
 };
 
 export const getWaterPerDayController = async (req, res, next) => {
