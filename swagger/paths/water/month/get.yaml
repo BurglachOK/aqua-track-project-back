@@ -1,7 +1,7 @@
 tags:
   - Water
 summary: Get list of drinks
-operationId: getMonthWater
+operationId: getWaterVolumePerMonth
 description: 'Get a list of customers water drinking for a specific month using this endpoint'
 security:
   - bearerAuth: []

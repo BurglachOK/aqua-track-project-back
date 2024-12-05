@@ -30,11 +30,11 @@ requestBody:
             description: 'User weight in kilograms'
             type: number
             example: 70
-          dailyActivityTime:
+          activeTime:
             description: 'User daily activity time in hours'
             type: number
             example: 2
-          dailyWaterNorm:
+          dailyNorm:
             description: 'User daily water intake norm in liters'
             type: number
             example: 1.5
