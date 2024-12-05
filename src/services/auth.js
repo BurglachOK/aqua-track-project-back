@@ -52,27 +52,48 @@ export const register = async (payload) => {
 };
 
 export const login = async (payload) => {
-  const { email, password } = payload;
-  const user = await UserCollection.findOne({ email });
-  if (!user) {
-    throw createHttpError(401, 'Email or password invalid');
-  }
+  //   const { email, password } = payload;
+  //   const user = await UserCollection.findOne({ email });
+  //   if (!user) {
+  //     throw createHttpError(401, 'Email or password invalid');
+  //   }
 
-  const passwordCompare = await bcrypt.compare(password, user.password);
-  if (!passwordCompare) {
-    throw createHttpError(401, 'Email or password invalid');
+  //   const passwordCompare = await bcrypt.compare(password, user.password);
+  //   if (!passwordCompare) {
+  //     throw createHttpError(401, 'Email or password invalid');
+  //   }
+
+  //   await SessionsCollection.deleteOne({ userId: user._id });
+
+  //   const sessionData = createSession();
+
+  //   const userSession = await SessionsCollection.create({
+  //     userId: user._id,
+  //     ...sessionData,
+  //   });
+
+  //   return userSession;
+  // };
+  const user = await UserCollection.findOne({ email: payload.email });
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+  const isEqual = await bcrypt.compare(payload.password, user.password);
+
+  if (!isEqual) {
+    throw createHttpError(401, 'Unauthorized');
   }
 
   await SessionsCollection.deleteOne({ userId: user._id });
 
-  const sessionData = createSession();
+  const newSession = createSession();
 
-  const userSession = await SessionsCollection.create({
+  const session = await SessionsCollection.create({
     userId: user._id,
-    ...sessionData,
+    ...newSession,
   });
 
-  return userSession;
+  return { user, session };
 };
 
 export const findSessionByAccessToken = (accessToken) =>
