@@ -24,7 +24,7 @@ properties:
     description: 'User weight in kilograms'
     type: number
     example: 70
-  activeTime:
+  dailyActivityTime:
     description: 'User daily activity time in hours'
     type: number
     example: 2
@@ -32,7 +32,7 @@ properties:
   #   description: 'User daily activity time in hours'
   #   type: boolean
   #   example: true
-  dailyNorm:
+  dailyWaterNorm:
     description: 'User daily water intake norm in liters'
     type: number
     example: 1.5

@@ -30,4 +30,4 @@ const waterSchema = new Schema(
   },
 );
 
-export const WaterVolume = model('water', waterSchema);
+export const WaterCollection = model('water', waterSchema);
