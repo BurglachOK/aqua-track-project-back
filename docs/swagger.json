@@ -77,7 +77,7 @@
                     "status",
                     "message",
                     "data",
-                    "actualDayWater"
+                    "water"
                   ],
                   "properties": {
                     "status": {
@@ -92,7 +92,7 @@
                       "type": "object",
                       "$ref": "#/components/schemas/water"
                     },
-                    "actualDayWater": {
+                    "water": {
                       "type": "integer",
                       "example": 1350
                     }
@@ -116,7 +116,7 @@
           "Water"
         ],
         "summary": "Patch water card by id",
-        "operationId": "patchCard",
+        "operationId": "updateWaterVolume",
         "description": "Update info on existing water card with given id",
         "security": [
           {
@@ -180,7 +180,7 @@
                     "status",
                     "message",
                     "data",
-                    "actualDayWater"
+                    "water"
                   ],
                   "properties": {
                     "status": {
@@ -194,10 +194,6 @@
                     "data": {
                       "type": "object",
                       "$ref": "#/components/schemas/water"
-                    },
-                    "actualDayWater": {
-                      "type": "integer",
-                      "example": 1350
                     }
                   }
                 }
@@ -217,7 +213,7 @@
           "Water"
         ],
         "summary": "Delete water card by id",
-        "operationId": "deleteCard",
+        "operationId": "deleteWaterVolume",
         "description": "Delete existing water card with given id",
         "security": [
           {
@@ -245,7 +241,7 @@
                   "required": [
                     "status",
                     "message",
-                    "actualDayWater"
+                    "water"
                   ],
                   "properties": {
                     "status": {
@@ -256,7 +252,7 @@
                       "type": "string",
                       "example": "Successfully patched a card!"
                     },
-                    "actualDayWater": {
+                    "water": {
                       "type": "integer",
                       "example": 1350
                     }
@@ -274,71 +270,13 @@
         }
       }
     },
-    "/water/day": {
-      "get": {
-        "tags": [
-          "Water"
-        ],
-        "summary": "Get list of water",
-        "operationId": "getDayWater",
-        "description": "Get list of customer water for particular day with this endpoint",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "date",
-            "schema": {
-              "type": "string",
-              "description": "Only existing dates as format YYYY:MM:DD between 2020 and 2099 are acceptable",
-              "example": "2024-12-03"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Return array with water for a day",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Water found!",
-                      "data": null,
-                      "$ref": "#/components/schemas/waterForMonth"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
     "/water/month": {
       "get": {
         "tags": [
           "Water"
         ],
         "summary": "Get list of drinks",
-        "operationId": "getMonthWater",
+        "operationId": "getWaterVolumePerMonth",
         "description": "Get a list of customers water drinking for a specific month using this endpoint",
         "security": [
           {
@@ -597,12 +535,12 @@
                     "type": "number",
                     "example": 70
                   },
-                  "dailyActivityTime": {
+                  "activeTime": {
                     "description": "User daily activity time in hours",
                     "type": "number",
                     "example": 2
                   },
-                  "dailyWaterNorm": {
+                  "dailyNorm": {
                     "description": "User daily water intake norm in liters",
                     "type": "number",
                     "example": 1.5
@@ -1282,12 +1220,12 @@
             "type": "number",
             "example": 70
           },
-          "dailyActivityTime": {
+          "activeTime": {
             "description": "User daily activity time in hours",
             "type": "number",
             "example": 2
           },
-          "dailyWaterNorm": {
+          "dailyNorm": {
             "description": "User daily water intake norm in liters",
             "type": "number",
             "example": 1.5
