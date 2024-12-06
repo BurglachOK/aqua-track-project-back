@@ -2,7 +2,7 @@ import createHttpError from 'http-errors';
 import {
   createWaterVolume,
   deleteWaterVolume,
-  getWaterVolumePerDay,
+  // getWaterVolumePerDay,
   getWaterVolumePerMonth,
   updateWaterVolume,
 } from '../services/water.js';
@@ -39,9 +39,9 @@ export const patchWaterVolumeController = async (req, res, next) => {
 };
 
 export const deleteWaterController = async (req, res, next) => {
-  
+
   const userId = req.user._id;
-  
+
   const { waterId } = req.params;
 
   const water = deleteWaterVolume(waterId, userId);
@@ -54,12 +54,12 @@ export const deleteWaterController = async (req, res, next) => {
   res.status(204).send();
 };
 
-export const getWaterPerDayController = async (req, res, next) => {
-  const { year, month, day } = req.query;
-  // const userId = req.user._id;
-  const data = await getWaterVolumePerDay(year, month, day, userId);
-  res.status(200).json(data);
-};
+// export const getWaterPerDayController = async (req, res, next) => {
+//   const { year, month, day } = req.query;
+//   // const userId = req.user._id;
+//   const data = await getWaterVolumePerDay(year, month, day, userId);
+//   res.status(200).json(data);
+// };
 
 export const getWaterPerMonthController = async (req, res, next) => {
   // console.log(req.query)

@@ -56,12 +56,12 @@ export const updateWaterVolumeSchema = Joi.object({
 //     .message('Time must be hh:mm / Where hh: 00-24, mm: 00-59'),
 // }).options({ abortEarly: false });
 
-export const searchByDayCardSchema = Joi.object({
-  date: Joi.string().pattern(DATE_REGEX).messages({
-    'string.pattern.base':
-      'Date should exist in a year range 2020 to 2099. For example 2024-12-02',
-  }),
-});
+// export const searchByDayCardSchema = Joi.object({
+//   date: Joi.string().pattern(DATE_REGEX).messages({
+//     'string.pattern.base':
+//       'Date should exist in a year range 2020 to 2099. For example 2024-12-02',
+//   }),
+// });
 
 export const searchByMonthCardSchema = Joi.object({
   date: Joi.string().pattern(MONTH_REGEX).messages({
