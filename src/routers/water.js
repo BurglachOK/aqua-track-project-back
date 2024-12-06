@@ -5,14 +5,14 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import {
   createWaterVolumeSchema,
-  searchByDayCardSchema,
+  // searchByDayCardSchema,
   // searchByMonthCardSchema,
   updateWaterVolumeSchema,
 } from '../validation/water.js';
 import {
   createWaterController,
   deleteWaterController,
-  getWaterPerDayController,
+  // getWaterPerDayController,
   getWaterPerMonthController,
   patchWaterVolumeController,
 } from '../controllers/water.js';
@@ -36,11 +36,11 @@ waterRouter.patch(
 
 waterRouter.delete('/:waterId', isValidId, ctrlWrapper(deleteWaterController));
 
-waterRouter.get(
-  '/day',
-  validateBody(searchByDayCardSchema),
-  ctrlWrapper(getWaterPerDayController),
-);
+// waterRouter.get(
+//   '/day',
+//   validateBody(searchByDayCardSchema),
+//   ctrlWrapper(getWaterPerDayController),
+// );
 
 waterRouter.get(
   '/month',

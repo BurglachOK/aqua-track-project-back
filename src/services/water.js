@@ -1,4 +1,4 @@
-import { UserCollection } from '../db/models/user.js';
+// import { UserCollection } from '../db/models/user.js';
 import { WaterVolume } from '../db/models/water.js';
 
 export const localDate = () => {
@@ -57,26 +57,26 @@ export const deleteWaterVolume = async (waterId) => {
   return water;
 };
 
-export const getWaterVolumePerDay = async (year, month, day, userId) => {
-  const query = {
-    userId,
-    date: { $regex: `${day}.${month}.${year}` },
-  };
-  const data = await WaterVolume.find(query);
-  const user = await UserCollection.findById(userId);
-  const statusdayAmount = user?.dailyRequirement || 1500;
-  let totalForDay = 0;
-  const items = [];
+// export const getWaterVolumePerDay = async (year, month, day, userId) => {
+//   const query = {
+//     userId,
+//     date: { $regex: `${day}.${month}.${year}` },
+//   };
+//   const data = await WaterVolume.find(query);
+//   const user = await UserCollection.findById(userId);
+//   const statusdayAmount = user?.dailyRequirement || 1500;
+//   let totalForDay = 0;
+//   const items = [];
 
-  const updatedData = data.map((item) => {
-    totalForDay += item.volume;
-    return { ...item.toObject(), statusdayAmount };
-  });
+//   const updatedData = data.map((item) => {
+//     totalForDay += item.volume;
+//     return { ...item.toObject(), statusdayAmount };
+//   });
 
-  const progressDay = Math.round((totalForDay / statusdayAmount) * 100);
+//   const progressDay = Math.round((totalForDay / statusdayAmount) * 100);
 
-  return { items: updatedData.length ? updatedData : items, progressDay };
-};
+//   return { items: updatedData.length ? updatedData : items, progressDay };
+// };
 
 export const getWaterVolumePerMonth = async (year, month, userId) => {
   const water = await WaterVolume.find({
